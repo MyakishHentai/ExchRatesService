@@ -1,0 +1,71 @@
+syntax = "proto3";
+// JSON
+import "google/protobuf/struct.proto";
+// DateTime
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+option csharp_namespace = "ExchRatesSvc";
+package ExchRatesSvc;
+
+service ExchRates {
+	// Получение информации о значениях курсов (котировок) на заданный период.
+	rpc GetCurrencyQuotes (QuotesRequest) returns (QuotesReply);
+	// Получение информации о валютах и их кодах.
+	rpc GetCurrencyCodes (google.protobuf.Empty) returns (CodesReply);
+}
+
+// Запрос (дата формирования справки).
+message QuotesRequest {
+	google.protobuf.Timestamp time = 1;
+}
+
+// Ответ (информация о курсе и валютах).
+message QuotesReply {
+	CourseInfo course = 1;
+	repeated QuotesInfo valutes = 2;
+}
+
+// Ответ (информация о курсе и кодах).
+message CodesReply {
+	CodesInfo code = 1;
+	repeated CurrencyInfo items = 2;
+}
+
+// Информация о курсе.
+message CourseInfo {
+	google.protobuf.Timestamp time = 1;
+	string name = 2;
+}
+
+// Информация о котировках.
+message QuotesInfo {
+	string id = 1;
+	uint32 num_code = 2;
+	string char_code = 3;
+	uint32 nominal = 4;
+	string name = 5;
+	float value = 6;
+}
+
+// Информация о валютах с кодами.
+message CodesInfo {
+	string name = 1;
+}
+
+// Информация о валютах.
+message CurrencyInfo {
+	string id = 1;
+	string name = 2;
+	string eng_name = 3;
+	uint32 nominal = 4;
+	string parent_code = 5;
+	uint32 num_code = 6;
+	string char_code = 7;
+}
+
+// Сериализованная полная информация JSON 
+// message CurrencyInfoJson {
+//     google.protobuf.Value data = 1;
+// }
+
