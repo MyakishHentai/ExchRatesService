@@ -11,7 +11,7 @@ namespace ExchRatesService.Services
     ///     Сервис, отвечающий за получение котировок валют и их кодов.
     ///     Обращается за информацией через WCF к БД.
     /// </summary>
-    public class ExchRatesService : ExchRates.ExchRatesBase
+    public class ExchRatesService : ExchRatesSvc.ExchRates.ExchRatesBase
     {
         private ILogger<ExchRatesService> _logger;
         public ExchRatesService(ILogger<ExchRatesService> logger)

@@ -1,4 +1,7 @@
-﻿using ExchRatesWCFService.Models;
+﻿using AutoMapper;
+using ExchRatesWCFService.Models;
+using ExchRatesWCFService.Models.Entities;
+using ExchRatesWCFService.Models.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,40 +13,88 @@ using System.Xml.Serialization;
 
 namespace ExchRatesWCFService
 {
-    // ПРИМЕЧАНИЕ. Команду "Переименовать" в меню "Рефакторинг" можно использовать для одновременного изменения имени класса "CentralExchRateService" в коде, SVC-файле и файле конфигурации.
-    // ПРИМЕЧАНИЕ. Чтобы запустить клиент проверки WCF для тестирования службы, выберите элементы CentralExchRateService.svc или CentralExchRateService.svc.cs в обозревателе решений и начните отладку.
+    /// <summary>
+    ///     Сервис получение котировок и валют по средствам API ЦБ РФ.
+    /// </summary>
     public class CentralExchRateService : ICentralExchRateService
     {
         private const string LinkCodesInfo = "http://www.cbr.ru/scripts/XML_valFull.asp";
         private const string LinkDaily = "https://www.cbr-xml-daily.ru/daily.xml";
         private const string ParamDaily = "date_req";
-
+        
         public void Update()
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///     Проверка на существование в БД.
+        /// </summary>
+        /// <returns>Значение существования.</returns>
+        private bool СheckExistence()
+        {
+            return false;
+        }
+        
+        private CodesDesc GetCurrencyCodesFromDB()
+        {
+            try
+            {
+                return new CodesDesc();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public CodesDesc GetCurrencyCodes()
         {
             try
             {
-                using (HttpClient client = new HttpClient())
+                if (!СheckExistence())
                 {
-                    using (var xmlStream = client.GetStreamAsync(LinkCodesInfo).Result)
+                    using (HttpClient client = new HttpClient())
                     {
-                        var serializer = new XmlSerializer(typeof(CodesDesc));
-                        var code = serializer.Deserialize(xmlStream) as CodesDesc;
-                        return code;
+                        using (var xmlStream = client.GetStreamAsync(LinkCodesInfo).Result)
+                        {
+                            var serializer = new XmlSerializer(typeof(CodesDesc));
+                            var code = serializer.Deserialize(xmlStream) as CodesDesc;
+                            var codeEntity = code.Map();
+                            // Mapping
+                            using (var context = new ExchRatesContext())
+                            {
+                                var codeEntity1 = code.Map();
+                                context.Codes.Add(codeEntity);
+                                context.SaveChanges();
+                            }
+                            return code;
+                        }
                     }
+
                 }
+                return GetCurrencyCodesFromDB();
             }
             catch (Exception ex)
             {
-                // log: error
                 return null;
             }
         }
 
+
+        private QuoteDesc GetCurrencyQuotesFromDB()
+        {
+            try
+            {
+                return new QuoteDesc();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         /// <summary>
         ///     Получение котировок валют с сайта ЦБ в форме XML.
@@ -58,15 +109,19 @@ namespace ExchRatesWCFService
 
             try
             {
-                using (HttpClient client = new HttpClient())
+                if (!СheckExistence())
                 {
-                    using (var xmlStream = client.GetStreamAsync(extLink).Result)
+                    using (HttpClient client = new HttpClient())
                     {
-                        var serializer = new XmlSerializer(typeof(QuoteDesc));
-                        var quote = serializer.Deserialize(xmlStream) as QuoteDesc;
-                        return quote;
+                        using (var xmlStream = client.GetStreamAsync(extLink).Result)
+                        {
+                            var serializer = new XmlSerializer(typeof(QuoteDesc));
+                            var quote = serializer.Deserialize(xmlStream) as QuoteDesc;
+                            return quote;
+                        }
                     }
                 }
+                return GetCurrencyQuotesFromDB();
             }
             catch (Exception ex)
             {

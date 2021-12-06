@@ -16,4 +16,8 @@
     <PackageReference Include="System.ServiceModel.Security" Version="4.7.*" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\common\ExchRates.Common\ExchRates.Common.csproj" />
+  </ItemGroup>
+
 </Project>

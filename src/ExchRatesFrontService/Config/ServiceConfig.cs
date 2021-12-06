@@ -17,9 +17,9 @@ namespace ExchRatesFrontService.Config
         public string BACK_ADDR { get; set; }
 
         /// <summary>
-        ///     Адрес кэш-сервиса.
+        ///     Путь файла для кэш-сервиса.
         /// </summary>
-        public string GAIA_ADDR { get; set; }
+        public string CACHE_FILE { get; set; }
 
         /// <summary>
         ///     Безопасность.

@@ -1,4 +1,6 @@
 using ExchRates.Common.Caching;
+using ExchRates.Common.Extensions;
+using ExchRates.Common.Middleware;
 using ExchRatesFrontService.Config;
 using ExchRatesFrontService.Services;
 using Microsoft.AspNetCore.Builder;
@@ -6,8 +8,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
+using System.IO;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
@@ -52,7 +56,7 @@ namespace ExchRatesFrontService
             services.AddGrpcClient<ExchRatesSvc.ExchRates.ExchRatesClient>
                 (opt => opt.Address = new Uri("https://localhost:5001"));         
 
-            if (!string.IsNullOrWhiteSpace(serviceConfig.GAIA_ADDR))
+            if (!string.IsNullOrWhiteSpace(serviceConfig.CACHE_FILE))
             {
                 // TODO: cache
                 // Добавить основной сервис
@@ -64,12 +68,13 @@ namespace ExchRatesFrontService
             }
             services
                 .AddMemoryCache()
-                .AddScoped<IMemoryCacheService, MemoryCacheService>()
-                .AddScoped<IExchRatesService, ExchRatesService>();
+                .AddScoped<ICacheService, MemoryCacheService>()
+                .AddScoped<IExchRatesService, ExchRatesService>()
+                .AddScoped<LoggingMiddleware>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             ServiceConfig serviceConfig = _configuration.Get<ServiceConfig>();
 
@@ -82,7 +87,7 @@ namespace ExchRatesFrontService
                 .UseSwaggerUI(opt =>
                     opt.SwaggerEndpoint("/swagger/v1/swagger.json",
                     $"{Program.ApplicationName} v1"));
-            if (!string.IsNullOrWhiteSpace(serviceConfig.GAIA_ADDR))
+            if (!string.IsNullOrWhiteSpace(serviceConfig.CACHE_FILE))
             {
                 // TODO: cache
             }
@@ -91,11 +96,12 @@ namespace ExchRatesFrontService
                 // TODO: cache
                 // app.UseMiddleware<>();
             }
-
+            loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "log.txt"));
             app
                 .UseHttpsRedirection()
                 .UseRouting()
                 .UseAuthorization()
+                .UseMiddleware<LoggingMiddleware>()
                 .UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
