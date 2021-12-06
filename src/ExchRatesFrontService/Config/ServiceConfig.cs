@@ -19,7 +19,7 @@ namespace ExchRatesFrontService.Config
         /// <summary>
         ///     Путь файла для кэш-сервиса.
         /// </summary>
-        public string CACHE_FILE { get; set; }
+        public bool IsMemoryCache { get; set; } = true;
 
         /// <summary>
         ///     Безопасность.

@@ -32,3 +32,20 @@ End processing HTTP request after 4723.9797ms - OK
 Status(Код ответа): 200
 ContentType(Тип содежимого): application/json; charset=utf-8
 
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesFrontService
+---------HttpRequest(Запрос):
+Method(Метод): POST
+Host(Хост): localhost:44364
+Path(Путь): /ExchRates/GetCurrencyQuotes
+Query(Переменные): 
+
+Start processing HTTP request POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyQuotes
+Sending HTTP request POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyQuotes
+Received HTTP response after 4155.1089ms - OK
+End processing HTTP request after 4173.9587ms - OK
+---------HttpResponse(Ответ):
+Status(Код ответа): 200
+ContentType(Тип содежимого): application/json; charset=utf-8
+

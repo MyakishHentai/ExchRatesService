@@ -6,3 +6,15 @@ Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCu
 Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyQuotes'
 Executed endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyQuotes'
 Request finished in 4442.294ms 200 application/grpc
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyQuotes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyQuotes'
+Executed endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyQuotes'
+Request finished in 3901.0572ms 200 application/grpc

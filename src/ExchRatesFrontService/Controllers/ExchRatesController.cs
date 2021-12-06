@@ -1,15 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ExchRatesFrontService.Services;
+using ExchRatesSvc;
+using Google.Protobuf.WellKnownTypes;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Reflection;
-using ExchRatesFrontService.Services;
-using Grpc.Net.Client;
-using Google.Protobuf.WellKnownTypes;
 using gRPC_Client = ExchRatesSvc.ExchRates.ExchRatesClient;
-using ExchRatesSvc;
 
 namespace ExchRatesFrontService.Controllers
 {

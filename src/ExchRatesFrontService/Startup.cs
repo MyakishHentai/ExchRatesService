@@ -54,12 +54,13 @@ namespace ExchRatesFrontService
                 });
 
             services.AddGrpcClient<ExchRatesSvc.ExchRates.ExchRatesClient>
-                (opt => opt.Address = new Uri("https://localhost:5001"));         
+                (opt => opt.Address = new Uri(serviceConfig.BACK_ADDR));
 
-            if (!string.IsNullOrWhiteSpace(serviceConfig.CACHE_FILE))
+            if (serviceConfig.IsMemoryCache)
             {
-                // TODO: cache
-                // Добавить основной сервис
+                services
+                    .AddMemoryCache()
+                    .AddScoped<ICacheService, MemoryCacheService>();
             }
             else
             {
@@ -67,8 +68,6 @@ namespace ExchRatesFrontService
                 // Добавить вторичный сервис
             }
             services
-                .AddMemoryCache()
-                .AddScoped<ICacheService, MemoryCacheService>()
                 .AddScoped<IExchRatesService, ExchRatesService>()
                 .AddScoped<LoggingMiddleware>();
         }
@@ -87,15 +86,7 @@ namespace ExchRatesFrontService
                 .UseSwaggerUI(opt =>
                     opt.SwaggerEndpoint("/swagger/v1/swagger.json",
                     $"{Program.ApplicationName} v1"));
-            if (!string.IsNullOrWhiteSpace(serviceConfig.CACHE_FILE))
-            {
-                // TODO: cache
-            }
-            else
-            {
-                // TODO: cache
-                // app.UseMiddleware<>();
-            }
+            
             loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "log.txt"));
             app
                 .UseHttpsRedirection()
