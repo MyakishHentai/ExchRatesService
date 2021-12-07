@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using gRPC_Client = ExchRatesSvc.ExchRates.ExchRatesClient;
 
 namespace ExchRatesFrontService.Controllers
@@ -35,7 +36,7 @@ namespace ExchRatesFrontService.Controllers
         /// <param name="dateRequest">Дата формирования справки.</param>
         /// <returns>Список котировок для валют.</returns>
         [HttpPost("GetCurrencyQuotes")]
-        public IEnumerable<QuotesInfo> GetCurrencyQuotes([FromQuery] DateTime dateRequest)
+        public async Task<IEnumerable<QuotesInfo>> GetCurrencyQuotes([FromQuery] DateTime dateRequest)
         {
             try
             {
@@ -44,11 +45,8 @@ namespace ExchRatesFrontService.Controllers
                     Time = Timestamp.FromDateTime(dateRequest.ToUniversalTime()),
                 };
 
-                using (var call = _client.GetCurrencyQuotesAsync(req))
-                {
-                    var result = call.ResponseAsync.Result;
-                    return result.Valutes.ToList();
-                };
+                using var call = _client.GetCurrencyQuotesAsync(req);
+                return (await call.ResponseAsync).Valutes.ToList();
 
             }
             catch (Exception ex)
@@ -63,16 +61,12 @@ namespace ExchRatesFrontService.Controllers
         /// </summary>
         /// <returns>Список кодов для валют.</returns>
         [HttpPost("GetCurrencyCodes")]
-        public IEnumerable<CurrencyInfo> GetCurrencyCodes()
+        public async Task<IEnumerable<CurrencyInfo>> GetCurrencyCodes()
         {
             try
             {
-                using (var call = _client.GetCurrencyCodesAsync(new Empty()))
-                {
-                    var result = call.ResponseAsync.Result;
-                    return result.Items.ToList();
-                };
-
+                using var call = _client.GetCurrencyCodesAsync(new Empty());
+                return (await call.ResponseAsync).Items.ToList();
             }
             catch (Exception ex)
             {
