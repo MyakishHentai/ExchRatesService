@@ -1,9 +1,6 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using ExchRates.Common.Caching.Interfaces;
+using Microsoft.Extensions.Caching.Memory;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExchRates.Common.Caching
 {

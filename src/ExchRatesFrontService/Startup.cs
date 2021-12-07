@@ -1,8 +1,8 @@
 using ExchRates.Common.Caching;
+using ExchRates.Common.Caching.Interfaces;
 using ExchRates.Common.Extensions;
 using ExchRates.Common.Middleware;
 using ExchRatesFrontService.Config;
-using ExchRatesFrontService.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,11 +31,14 @@ namespace ExchRatesFrontService
         public void ConfigureServices(IServiceCollection services)
         {
             ServiceConfig serviceConfig = _configuration.Get<ServiceConfig>();
-            
+
             if (serviceConfig.IsSecure)
             {
                 AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
             }
+            //services.AddDbContext<ExchRatesContext>(options =>
+            //        options.UseNpgsql(serviceConfig.Connection));
+
             services
                 .AddHttpContextAccessor()
                 .AddSwaggerGen(opt =>
@@ -68,7 +71,6 @@ namespace ExchRatesFrontService
                 // Добавить вторичный сервис
             }
             services
-                .AddScoped<IExchRatesService, ExchRatesService>()
                 .AddScoped<LoggingMiddleware>();
         }
 
@@ -86,7 +88,7 @@ namespace ExchRatesFrontService
                 .UseSwaggerUI(opt =>
                     opt.SwaggerEndpoint("/swagger/v1/swagger.json",
                     $"{Program.ApplicationName} v1"));
-            
+
             loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "log.txt"));
             app
                 .UseHttpsRedirection()

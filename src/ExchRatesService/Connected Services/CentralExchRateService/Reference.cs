@@ -345,14 +345,11 @@ namespace CentralExchRateService
     public interface ICentralExchRateService
     {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICentralExchRateService/Update", ReplyAction="http://tempuri.org/ICentralExchRateService/UpdateResponse")]
-        System.Threading.Tasks.Task UpdateAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICentralExchRateService/GetCurrencyQuotesDesc", ReplyAction="http://tempuri.org/ICentralExchRateService/GetCurrencyQuotesDescResponse")]
+        System.Threading.Tasks.Task<CentralExchRateService.QuoteDesc> GetCurrencyQuotesDescAsync(System.DateTime date);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICentralExchRateService/GetCurrencyQuotes", ReplyAction="http://tempuri.org/ICentralExchRateService/GetCurrencyQuotesResponse")]
-        System.Threading.Tasks.Task<CentralExchRateService.QuoteDesc> GetCurrencyQuotesAsync(System.DateTime date);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICentralExchRateService/GetCurrencyCodes", ReplyAction="http://tempuri.org/ICentralExchRateService/GetCurrencyCodesResponse")]
-        System.Threading.Tasks.Task<CentralExchRateService.CodesDesc> GetCurrencyCodesAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICentralExchRateService/GetCurrencyCodesDesc", ReplyAction="http://tempuri.org/ICentralExchRateService/GetCurrencyCodesDescResponse")]
+        System.Threading.Tasks.Task<CentralExchRateService.CodesDesc> GetCurrencyCodesDescAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
@@ -405,19 +402,14 @@ namespace CentralExchRateService
         {
         }
         
-        public System.Threading.Tasks.Task UpdateAsync()
+        public System.Threading.Tasks.Task<CentralExchRateService.QuoteDesc> GetCurrencyQuotesDescAsync(System.DateTime date)
         {
-            return base.Channel.UpdateAsync();
+            return base.Channel.GetCurrencyQuotesDescAsync(date);
         }
         
-        public System.Threading.Tasks.Task<CentralExchRateService.QuoteDesc> GetCurrencyQuotesAsync(System.DateTime date)
+        public System.Threading.Tasks.Task<CentralExchRateService.CodesDesc> GetCurrencyCodesDescAsync()
         {
-            return base.Channel.GetCurrencyQuotesAsync(date);
-        }
-        
-        public System.Threading.Tasks.Task<CentralExchRateService.CodesDesc> GetCurrencyCodesAsync()
-        {
-            return base.Channel.GetCurrencyCodesAsync();
+            return base.Channel.GetCurrencyCodesDescAsync();
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

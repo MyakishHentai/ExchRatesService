@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ExchRatesWCFService.Models.Entities
+namespace ExchRatesService.Models
 {
-    public class QuoteEntity
+    public class Quote
     {
-        public QuoteEntity()
+        public Quote()
         {
         }
 
@@ -20,6 +20,6 @@ namespace ExchRatesWCFService.Models.Entities
         public float Value { get; set; }
 
         [ForeignKey("ValuteId")]
-        public CurrencyCodesEntity Valute { get; set; }
+        public CurrencyCodes Valute { get; set; }
     }
 }

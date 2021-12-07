@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
 
 namespace ExchRatesWCFService.Models.Entities
 {
     public class ExchRatesContext : DbContext
     {
-        public ExchRatesContext() : base("name=DBConnection")
+        public ExchRatesContext() : base(nameOrConnectionString: "DBConnection")
         {
-            //Database.SetInitializer(new DropCreateDatabaseAlways<ExchRatesContext>());
+            Database.SetInitializer<ExchRatesContext>(null);
+            Database.SetInitializer(new CreateDatabaseIfNotExists<ExchRatesContext>());
+            Database.SetInitializer(new ExchRatesDBInitializer());
             Database.CreateIfNotExists();
         }
         public DbSet<CodesEntity> Codes { get; set; }

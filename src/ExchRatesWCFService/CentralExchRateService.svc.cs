@@ -1,15 +1,8 @@
-﻿using AutoMapper;
-using ExchRatesWCFService.Models;
-using ExchRatesWCFService.Models.Entities;
-using ExchRatesWCFService.Models.Mapping;
+﻿using ExchRatesWCFService.Models;
+using ExchRatesWCFService.Services;
+using ExchRatesWCFService.Services.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
-using System.Xml.Serialization;
 
 namespace ExchRatesWCFService
 {
@@ -18,115 +11,47 @@ namespace ExchRatesWCFService
     /// </summary>
     public class CentralExchRateService : ICentralExchRateService
     {
-        private const string LinkCodesInfo = "http://www.cbr.ru/scripts/XML_valFull.asp";
-        private const string LinkDaily = "https://www.cbr-xml-daily.ru/daily.xml";
-        private const string ParamDaily = "date_req";
-        
-        public void Update()
-        {
-            throw new NotImplementedException();
-        }
 
-        /// <summary>
-        ///     Проверка на существование в БД.
-        /// </summary>
-        /// <returns>Значение существования.</returns>
-        private bool СheckExistence()
+        private readonly IInfoService _infoService;
+
+        public CentralExchRateService()
         {
-            return false;
-        }
-        
-        private CodesDesc GetCurrencyCodesFromDB()
+            _infoService = new CbrInfoService();
+        }        
+
+        public CodesDesc GetCurrencyCodesDesc()
         {
             try
             {
-                return new CodesDesc();
-
+                //logger
+                return _infoService.GetCodesInfoXML<CodesDesc>();
             }
             catch (Exception ex)
             {
-                throw ex;
+                //logger
+                throw new SerializationException(
+                    "Не удалось получить информацию по кодам валют.", ex);
             }
         }
 
-        public CodesDesc GetCurrencyCodes()
-        {
-            try
-            {
-                if (!СheckExistence())
-                {
-                    using (HttpClient client = new HttpClient())
-                    {
-                        using (var xmlStream = client.GetStreamAsync(LinkCodesInfo).Result)
-                        {
-                            var serializer = new XmlSerializer(typeof(CodesDesc));
-                            var code = serializer.Deserialize(xmlStream) as CodesDesc;
-                            var codeEntity = code.Map();
-                            // Mapping
-                            using (var context = new ExchRatesContext())
-                            {
-                                var codeEntity1 = code.Map();
-                                context.Codes.Add(codeEntity);
-                                context.SaveChanges();
-                            }
-                            return code;
-                        }
-                    }
-
-                }
-                return GetCurrencyCodesFromDB();
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
-
-
-        private QuoteDesc GetCurrencyQuotesFromDB()
-        {
-            try
-            {
-                return new QuoteDesc();
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
 
         /// <summary>
         ///     Получение котировок валют с сайта ЦБ в форме XML.
         /// </summary>
         /// <param name="date">Дата отслеживания.</param>
         /// <returns>Описание котировок.</returns>
-        public QuoteDesc GetCurrencyQuotes(DateTime date)
+        public QuoteDesc GetCurrencyQuotesDesc(DateTime date)
         {
-            var extLink = date == DateTime.MinValue ?
-                LinkDaily :
-                $@"{LinkDaily}?{ParamDaily}={date:dd/MM/yyyy}";
-
             try
             {
-                if (!СheckExistence())
-                {
-                    using (HttpClient client = new HttpClient())
-                    {
-                        using (var xmlStream = client.GetStreamAsync(extLink).Result)
-                        {
-                            var serializer = new XmlSerializer(typeof(QuoteDesc));
-                            var quote = serializer.Deserialize(xmlStream) as QuoteDesc;
-                            return quote;
-                        }
-                    }
-                }
-                return GetCurrencyQuotesFromDB();
+                return _infoService.GetDailyInfoXML<QuoteDesc>(date);
             }
             catch (Exception ex)
             {
                 // log: error
-                return null;
+                throw new SerializationException(
+                    "Не удалось получить информацию по кодам валют.", ex);
+
             }
         }
     }

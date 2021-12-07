@@ -13,10 +13,12 @@ namespace ExchRatesService.Services
     /// </summary>
     public class ExchRatesService : ExchRatesSvc.ExchRates.ExchRatesBase
     {
-        private ILogger<ExchRatesService> _logger;
-        public ExchRatesService(ILogger<ExchRatesService> logger)
+        private readonly ILogger<ExchRatesService> _logger;
+        private readonly ICentralExchRateService _centralExchService;
+        public ExchRatesService(ILogger<ExchRatesService> logger, ICentralExchRateService service)
         {
             _logger = logger;
+            _centralExchService = service;
         }
 
         /// <summary>
@@ -27,32 +29,34 @@ namespace ExchRatesService.Services
         /// <returns>The response to send back to the client (wrapped by a task).</returns>
         public override async Task<QuotesReply> GetCurrencyQuotes(QuotesRequest request, ServerCallContext context)
         {
-            using (var client = new CentralExchRateServiceClient())
+            // Получение данных с ЦБ РФ через WCF
+            var centerReply = await _centralExchService
+                .GetCurrencyQuotesDescAsync(request.Time.ToDateTime());
+
+            var response = new QuotesReply
             {
-                var wcfReply = await client.GetCurrencyQuotesAsync(request.Time.ToDateTime());
-                var response = new QuotesReply
+                Course = new CourseInfo
                 {
-                    Course = new CourseInfo
-                    {
-                        Name = wcfReply.Name,
-                        Time = Timestamp.FromDateTime(request.Time.ToDateTime())
-                    }
-                };
-                foreach (var quoteDesc in wcfReply.Valutes)
-                {
-                    var valute = new QuotesInfo
-                    {
-                        Id = quoteDesc.ID,
-                        Name = quoteDesc.Name,
-                        CharCode = quoteDesc.CharCode,
-                        Nominal = quoteDesc.Nominal,
-                        NumCode = quoteDesc.NumCode,
-                        Value = float.Parse(quoteDesc.Value)
-                    };
-                    response.Valutes.Add(valute);
+                    Name = centerReply.Name,
+                    Time = Timestamp.FromDateTime(request.Time.ToDateTime())
                 }
-                return await Task.FromResult(response);
             };
+
+            foreach (var quoteDesc in centerReply.Valutes)
+            {
+                var valute = new QuoteInfo
+                {
+                    Id = quoteDesc.ID,
+                    Name = quoteDesc.Name,
+                    CharCode = quoteDesc.CharCode,
+                    Nominal = quoteDesc.Nominal,
+                    NumCode = quoteDesc.NumCode,
+                    Value = float.Parse(quoteDesc.Value)
+                };
+                response.Valutes.Add(valute);
+            }
+            return await Task.FromResult(response);
+
         }
 
         /// <summary>
@@ -65,7 +69,7 @@ namespace ExchRatesService.Services
         {
             using (var client = new CentralExchRateServiceClient())
             {
-                var wcfReply = await client.GetCurrencyCodesAsync();
+                var wcfReply = await client.GetCurrencyCodesDescAsync();
                 var response = new CodesReply
                 {
                     Code = new CodesInfo

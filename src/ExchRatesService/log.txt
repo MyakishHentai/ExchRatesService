@@ -18,3 +18,421 @@ Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCu
 Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyQuotes'
 Executed endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyQuotes'
 Request finished in 3901.0572ms 200 application/grpc
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyQuotes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyQuotes'
+Executed endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyQuotes'
+Request finished in 4494.1692ms 200 application/grpc
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Error when executing service method 'GetCurrencyCodes'.
+Executed endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Request finished in 19550.1163ms 200 application/grpc
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Error when executing service method 'GetCurrencyCodes'.
+Executed endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Request finished in 64851.2691ms 200 application/grpc
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Application is shutting down...
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Error when executing service method 'GetCurrencyCodes'.
+Executed endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Request finished in 184799.1599ms 200 application/grpc
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Error when executing service method 'GetCurrencyCodes'.
+Executed endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Request finished in 192490.9942ms 200 application/grpc
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Error when executing service method 'GetCurrencyCodes'.
+Executed endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Request finished in 250896.9172ms 200 application/grpc
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Error when executing service method 'GetCurrencyCodes'.
+Executed endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Request finished in 83647.6569ms 200 application/grpc
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Error when executing service method 'GetCurrencyCodes'.
+Executed endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Request finished in 134801.453ms 200 application/grpc
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Error when executing service method 'GetCurrencyCodes'.
+Executed endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Request finished in 73724.615ms 200 application/grpc
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Error when executing service method 'GetCurrencyCodes'.
+Executed endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Request finished in 241706.1857ms 200 application/grpc
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Error when executing service method 'GetCurrencyCodes'.
+Executed endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Request finished in 61896.4377ms 200 application/grpc
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Error when executing service method 'GetCurrencyCodes'.
+Executed endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Request finished in 20696.7201ms 200 application/grpc
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Request starting HTTP/2 POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes application/grpc 
+Executing endpoint 'gRPC - /ExchRatesSvc.ExchRates/GetCurrencyCodes'
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesService

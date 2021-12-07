@@ -1,5 +1,4 @@
-﻿using ExchRatesFrontService.Services;
-using ExchRatesSvc;
+﻿using ExchRatesSvc;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -19,15 +18,13 @@ namespace ExchRatesFrontService.Controllers
     public class ExchRatesController : ControllerBase
     {
         private readonly ILogger<ExchRatesController> _logger;
-        private readonly IExchRatesService _exchRatesService;
         private readonly gRPC_Client _client;
+        //private readonly ExchRatesContext _context;
 
-        public ExchRatesController(ILogger<ExchRatesController> logger,
-            IExchRatesService exchRatesService, gRPC_Client client)
+        public ExchRatesController(ILogger<ExchRatesController> logger, gRPC_Client client)
         {
             _client = client;
             _logger = logger;
-            _exchRatesService = exchRatesService;
         }
 
         /// <summary>
@@ -36,7 +33,7 @@ namespace ExchRatesFrontService.Controllers
         /// <param name="dateRequest">Дата формирования справки.</param>
         /// <returns>Список котировок для валют.</returns>
         [HttpPost("GetCurrencyQuotes")]
-        public async Task<IEnumerable<QuotesInfo>> GetCurrencyQuotes([FromQuery] DateTime dateRequest)
+        public async Task<IEnumerable<QuoteInfo>> GetCurrencyQuotes([FromQuery] DateTime dateRequest)
         {
             try
             {
@@ -65,6 +62,18 @@ namespace ExchRatesFrontService.Controllers
         {
             try
             {
+                //var table = new CurrencyCodesEntity
+                //{
+                //    Id = "dsd",
+                //    Name = "asda",
+                //    EngName = "asda",
+                //    Nominal = 123,
+                //    ParentCode = "asda",
+                //    NumCode = 123,
+                //    CharCode = "asda"
+                //};
+                //_context.Currencies.Add(table);
+                //_context.SaveChanges();
                 using var call = _client.GetCurrencyCodesAsync(new Empty());
                 return (await call.ResponseAsync).Items.ToList();
             }

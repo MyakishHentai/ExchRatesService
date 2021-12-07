@@ -23,7 +23,7 @@ message QuotesRequest {
 // Ответ (информация о курсе и валютах).
 message QuotesReply {
 	CourseInfo course = 1;
-	repeated QuotesInfo valutes = 2;
+	repeated QuoteInfo valutes = 2;
 }
 
 // Ответ (информация о курсе и кодах).
@@ -39,7 +39,7 @@ message CourseInfo {
 }
 
 // Информация о котировках.
-message QuotesInfo {
+message QuoteInfo {
 	string id = 1;
 	uint32 num_code = 2;
 	string char_code = 3;

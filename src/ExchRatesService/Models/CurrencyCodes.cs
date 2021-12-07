@@ -2,13 +2,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ExchRatesWCFService.Models.Entities
+namespace ExchRatesService.Models
 {
-    public class CurrencyCodesEntity
+    public class CurrencyCodes
     {
-        public CurrencyCodesEntity()
+        public CurrencyCodes()
         {
-            Quotes = new HashSet<QuoteEntity>();
+            Quotes = new HashSet<Quote>();
         }
 
         [Key]
@@ -22,16 +22,12 @@ namespace ExchRatesWCFService.Models.Entities
         public uint Nominal { get; set; }
 
         public string ParentCode { get; set; }
-
-        [Index(IsUnique = true)]
         public ushort NumCode { get; set; }
-
-        [Index(IsUnique = true)]
         public string CharCode { get; set; }
 
         [ForeignKey("MarketId")]
-        public CodesEntity Market { get; set; }
-        public ICollection<QuoteEntity> Quotes { get; set; }
+        public Codes Market { get; set; }
+        public ICollection<Quote> Quotes { get; set; }
 
     }
 }

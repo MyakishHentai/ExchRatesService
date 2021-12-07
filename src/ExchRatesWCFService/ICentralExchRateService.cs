@@ -1,10 +1,6 @@
 ﻿using ExchRatesWCFService.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.Text;
 
 namespace ExchRatesWCFService
 {
@@ -15,18 +11,12 @@ namespace ExchRatesWCFService
     public interface ICentralExchRateService
     {
         /// <summary>
-        ///     Обновление БД.
-        /// </summary>
-        [OperationContract]
-        void Update();
-
-        /// <summary>
         ///     Получение котировок валют на заданный день.
         /// </summary>
         /// <param name="date">Дата формирования справки.</param>
         /// <returns>Значение котировок.</returns>
         [OperationContract]
-        QuoteDesc GetCurrencyQuotes(DateTime date);
+        QuoteDesc GetCurrencyQuotesDesc(DateTime date);
 
 
         /// <summary>
@@ -34,6 +24,6 @@ namespace ExchRatesWCFService
         /// </summary>
         /// <returns>Описание валют.</returns>
         [OperationContract]
-        CodesDesc GetCurrencyCodes();
+        CodesDesc GetCurrencyCodesDesc();
     }
 }

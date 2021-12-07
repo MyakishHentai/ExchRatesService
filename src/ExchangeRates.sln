@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "protos", "protos", "{A46340
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchRatesService", "ExchRatesService\ExchRatesService.csproj", "{9A8F3DC1-7A6E-40F9-8B46-186454FEFF5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchRates.Common", "..\common\ExchRates.Common\ExchRates.Common.csproj", "{C870BF02-850C-4B93-8174-1E55580398F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchRates.Common", "..\common\ExchRates.Common\ExchRates.Common.csproj", "{C870BF02-850C-4B93-8174-1E55580398F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

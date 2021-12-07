@@ -16,6 +16,8 @@ namespace ExchRatesFrontService.Config
         /// </summary>
         public string BACK_ADDR { get; set; }
 
+        public string Connection { get; set; }
+
         /// <summary>
         ///     Путь файла для кэш-сервиса.
         /// </summary>

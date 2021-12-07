@@ -1,8 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ExchRatesWCFService.Models.Entities
+namespace ExchRates.DataBase.Models.Entities
 {
     public class CurrencyCodesEntity
     {
@@ -11,7 +16,7 @@ namespace ExchRatesWCFService.Models.Entities
             Quotes = new HashSet<QuoteEntity>();
         }
 
-        [Key]
+        [Key]        
         public string Id { get; set; }
         public int MarketId { get; set; }
 
@@ -22,11 +27,7 @@ namespace ExchRatesWCFService.Models.Entities
         public uint Nominal { get; set; }
 
         public string ParentCode { get; set; }
-
-        [Index(IsUnique = true)]
         public ushort NumCode { get; set; }
-
-        [Index(IsUnique = true)]
         public string CharCode { get; set; }
 
         [ForeignKey("MarketId")]
