@@ -13,7 +13,7 @@ namespace ExchRatesService.Models
 
         [Key]
         public string Id { get; set; }
-        public int MarketId { get; set; }
+        public int? MarketId { get; set; }
 
         public string Name { get; set; }
 

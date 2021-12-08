@@ -6,7 +6,7 @@
       "applicationUrl": "https://localhost:5001",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DefaultConnection": "Server=127.0.0.1;port=5432;Database=ExchRates;User Id=postgres;Password=localbase;"
+        "DefaultConnection": "Host=127.0.0.1;port=5432;Database=ExchRates;User Id=postgres;Password=localbase;"
       }
     }
   }

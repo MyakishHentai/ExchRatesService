@@ -5,8 +5,8 @@ namespace ExchRatesWCFService.Models
     [XmlType(AnonymousType = true)]
     public class CurrencyQuoteDesc
     {
-        [XmlAttribute]
-        public string ID { get; set; }
+        [XmlAttribute(AttributeName = "ID")]
+        public string Id { get; set; }
 
         [XmlElement(ElementName = "NumCode", IsNullable = true)]
         public string NumCodeStr { get; set; }

@@ -26,7 +26,8 @@ namespace ExchRates.Common.Middleware
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, @$"Возникла ошибка при выполнения действия {context.Request.Path}");
+                _logger.LogError(ex, @$"[{DateTime.Now}]:Возникла ошибка при 
+                                        выполнения действия {context.Request.Path}");
                 throw;
             }
             finally
@@ -41,7 +42,7 @@ namespace ExchRates.Common.Middleware
             {
                 await Task.Run(() =>
                 {
-                    _logger.LogInformation($"---------HttpRequest(Запрос):\r\n" +
+                    _logger.LogInformation($"[{DateTime.Now}]:HttpRequest(Запрос):\r\n" +
                                            $"Method(Метод): {request.Method}\r\n" +
                                            $"Host(Хост): {request.Host}\r\n" +
                                            $"Path(Путь): {request.Path}\r\n" +
@@ -60,7 +61,7 @@ namespace ExchRates.Common.Middleware
             {
                 await Task.Run(() =>
                 {
-                    _logger.LogInformation($"---------HttpResponse(Ответ):\r\n" +
+                    _logger.LogInformation($"[{DateTime.Now}]:HttpResponse(Ответ):\r\n" +
                                            $"Status(Код ответа): {response.StatusCode}\r\n" +
                                            $"ContentType(Тип содежимого): {response.ContentType}\r\n");
                 });

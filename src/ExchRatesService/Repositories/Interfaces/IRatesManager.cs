@@ -13,6 +13,12 @@ namespace ExchRatesService.Repositories.Interfaces
         IQueryable<Quote> Quotes { get; }
         IQueryable<CurrencyCodes> Currencies { get; }
 
-        Task Save();
+        Task AddCodesAsync(Codes codes);
+
+        Task AddQuotesAsync(ICollection<Quote> quotes);
+
+        void Save();
+        Task SaveAsync();
+
     }
 }

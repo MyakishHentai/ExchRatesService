@@ -72,7 +72,7 @@ namespace CentralExchRateService
         
         private string CharCodeField;
         
-        private string IDField;
+        private string IdField;
         
         private string NameField;
         
@@ -98,15 +98,15 @@ namespace CentralExchRateService
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ID
+        public string Id
         {
             get
             {
-                return this.IDField;
+                return this.IdField;
             }
             set
             {
-                this.IDField = value;
+                this.IdField = value;
             }
         }
         
@@ -223,7 +223,7 @@ namespace CentralExchRateService
         
         private string EngNameField;
         
-        private string IDField;
+        private string IdField;
         
         private string NameField;
         
@@ -262,15 +262,15 @@ namespace CentralExchRateService
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ID
+        public string Id
         {
             get
             {
-                return this.IDField;
+                return this.IdField;
             }
             set
             {
-                this.IDField = value;
+                this.IdField = value;
             }
         }
         

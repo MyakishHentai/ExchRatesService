@@ -4,6 +4,10 @@ using Grpc.Core;
 using Microsoft.Extensions.Logging;
 using CentralExchRateService;
 using System.Threading.Tasks;
+using ExchRatesService.Helpers.Mapping;
+using ExchRatesService.Repositories.Interfaces;
+using System.Linq;
+using System;
 
 namespace ExchRatesService.Services
 {
@@ -15,10 +19,12 @@ namespace ExchRatesService.Services
     {
         private readonly ILogger<ExchRatesService> _logger;
         private readonly ICentralExchRateService _centralExchService;
-        public ExchRatesService(ILogger<ExchRatesService> logger, ICentralExchRateService service)
+        private readonly IRatesManager _dbManager;
+        public ExchRatesService(ILogger<ExchRatesService> logger, ICentralExchRateService service, IRatesManager dbManager)
         {
             _logger = logger;
             _centralExchService = service;
+            _dbManager = dbManager;
         }
 
         /// <summary>
@@ -46,7 +52,7 @@ namespace ExchRatesService.Services
             {
                 var valute = new QuoteInfo
                 {
-                    Id = quoteDesc.ID,
+                    Id = quoteDesc.Id,
                     Name = quoteDesc.Name,
                     CharCode = quoteDesc.CharCode,
                     Nominal = quoteDesc.Nominal,
@@ -67,32 +73,39 @@ namespace ExchRatesService.Services
         /// <returns>The response to send back to the client (wrapped by a task).</returns>
         public override async Task<CodesReply> GetCurrencyCodes(Empty request, ServerCallContext context)
         {
-            using (var client = new CentralExchRateServiceClient())
+            try
             {
-                var wcfReply = await client.GetCurrencyCodesDescAsync();
+                var codesDesc = await _centralExchService.GetCurrencyCodesDescAsync();
+                var codesEnt = codesDesc.Map();
+                if (codesDesc.Items.Length != _dbManager.Currencies.Count())
+                {
+                    await _dbManager.AddCodesAsync(codesEnt);
+                    await _dbManager.SaveAsync();
+                }
+
                 var response = new CodesReply
                 {
                     Code = new CodesInfo
                     {
-                        Name = wcfReply.Name
+                        Name = _dbManager.Codes.OrderBy(x=>x.Id).FirstOrDefault()?.Name 
+                        ?? "Foreign Currency Market Lib"
                     }
                 };
-                foreach (var codeDesc in wcfReply.Items)
+
+                foreach (var cur in _dbManager.Currencies)
                 {
-                    var item = new CurrencyInfo
-                    {
-                        Id = codeDesc.ID,
-                        Name = codeDesc.Name,
-                        EngName = codeDesc.EngName,
-                        Nominal = codeDesc.Nominal,
-                        ParentCode = codeDesc.ParentCode,
-                        NumCode = codeDesc.NumCode,
-                        CharCode = codeDesc.CharCode
-                    };
+                    var item = cur.Map();
                     response.Items.Add(item);
                 }
                 return await Task.FromResult(response);
-            };
+            }
+            catch (Exception ex)
+            {
+                // TODO: Вернуть ошибку на клиента.
+                _logger.LogError($"Ошибка при попытке получения данных {ex.Message}", ex);
+                throw;
+            }
+            
         }
     }
 }

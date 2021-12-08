@@ -864,3 +864,81 @@ Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesFrontService
 Application started. Press Ctrl+C to shut down.
 Hosting environment: Development
 Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesFrontService
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesFrontService
+[08.12.2021 19:09:39]:HttpRequest(Запрос):
+Method(Метод): POST
+Host(Хост): localhost:44364
+Path(Путь): /ExchRates/GetCurrencyCodes
+Query(Переменные): 
+
+Start processing HTTP request POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes
+Sending HTTP request POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes
+Received HTTP response after 312793.0055ms - OK
+End processing HTTP request after 312819.8492ms - OK
+[08.12.2021 19:14:53]:HttpResponse(Ответ):
+Status(Код ответа): 200
+ContentType(Тип содежимого): application/json; charset=utf-8
+
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesFrontService
+[08.12.2021 20:22:54]:HttpRequest(Запрос):
+Method(Метод): POST
+Host(Хост): localhost:44364
+Path(Путь): /ExchRates/GetCurrencyCodes
+Query(Переменные): 
+
+Start processing HTTP request POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes
+Sending HTTP request POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesFrontService
+[08.12.2021 20:28:55]:HttpRequest(Запрос):
+Method(Метод): POST
+Host(Хост): localhost:44364
+Path(Путь): /ExchRates/GetCurrencyCodes
+Query(Переменные): 
+
+Start processing HTTP request POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes
+Sending HTTP request POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesFrontService
+[08.12.2021 20:30:18]:HttpRequest(Запрос):
+Method(Метод): POST
+Host(Хост): localhost:44364
+Path(Путь): /ExchRates/GetCurrencyCodes
+Query(Переменные): 
+
+Start processing HTTP request POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes
+Sending HTTP request POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesFrontService
+[08.12.2021 20:37:01]:HttpRequest(Запрос):
+Method(Метод): POST
+Host(Хост): localhost:44364
+Path(Путь): /ExchRates/GetCurrencyCodes
+Query(Переменные): 
+
+Start processing HTTP request POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes
+Sending HTTP request POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+Content root path: D:\Projects\EGAR\ExchangeRates\src\ExchRatesFrontService
+[08.12.2021 20:41:10]:HttpRequest(Запрос):
+Method(Метод): POST
+Host(Хост): localhost:44364
+Path(Путь): /ExchRates/GetCurrencyCodes
+Query(Переменные): 
+
+Start processing HTTP request POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes
+Sending HTTP request POST https://localhost:5001/ExchRatesSvc.ExchRates/GetCurrencyCodes
+Received HTTP response after 165110.6267ms - OK
+End processing HTTP request after 165146.5541ms - OK
+[08.12.2021 20:43:55]:HttpResponse(Ответ):
+Status(Код ответа): 200
+ContentType(Тип содежимого): application/json; charset=utf-8
+
