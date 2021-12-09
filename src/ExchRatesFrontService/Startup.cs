@@ -36,8 +36,6 @@ namespace ExchRatesFrontService
             {
                 AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
             }
-            //services.AddDbContext<ExchRatesContext>(options =>
-            //        options.UseNpgsql(serviceConfig.Connection));
 
             services
                 .AddHttpContextAccessor()
@@ -89,7 +87,7 @@ namespace ExchRatesFrontService
                     opt.SwaggerEndpoint("/swagger/v1/swagger.json",
                     $"{Program.ApplicationName} v1"));
 
-            loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "log.txt"));
+            loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "Logs\\log.txt"));
             app
                 .UseHttpsRedirection()
                 .UseRouting()

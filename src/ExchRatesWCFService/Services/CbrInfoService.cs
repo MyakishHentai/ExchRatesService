@@ -11,6 +11,11 @@ namespace ExchRatesWCFService.Services
         private const string LinkDaily = "https://www.cbr-xml-daily.ru/daily.xml";
         private const string ParamDaily = "date_req";
 
+        /// <summary>
+        ///     Получение данных по кодам валют.
+        /// </summary>
+        /// <typeparam name="T">Тип десериализации.</typeparam>
+        /// <returns>Сгенерированный тип.</returns>
         public T GetCodesInfoXML<T>() where T : class
         {
             try
@@ -31,6 +36,11 @@ namespace ExchRatesWCFService.Services
             }
         }
 
+        /// <summary>
+        ///     Получение данных котировок валют.
+        /// </summary>
+        /// <typeparam name="T">Тип десериализации.</typeparam>
+        /// <returns>Сгенерированный тип.</returns>
         public T GetDailyInfoXML<T>(DateTime date) where T : class
         {
             var extLink = date == DateTime.MinValue ?
@@ -41,7 +51,7 @@ namespace ExchRatesWCFService.Services
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    using (var xmlStream = client.GetStreamAsync(LinkCodesInfo).Result)
+                    using (var xmlStream = client.GetStreamAsync(extLink).Result)
                     {
                         var serializer = new XmlSerializer(typeof(T));
                         var code = serializer.Deserialize(xmlStream) as T;

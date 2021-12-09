@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using gRPC_Client = ExchRatesSvc.ExchRates.ExchRatesClient;
+using Client = ExchRatesSvc.ExchRates.ExchRatesClient;
 
 namespace ExchRatesFrontService.Controllers
 {
@@ -18,10 +18,9 @@ namespace ExchRatesFrontService.Controllers
     public class ExchRatesController : ControllerBase
     {
         private readonly ILogger<ExchRatesController> _logger;
-        private readonly gRPC_Client _client;
-        //private readonly ExchRatesContext _context;
+        private readonly Client _client;
 
-        public ExchRatesController(ILogger<ExchRatesController> logger, gRPC_Client client)
+        public ExchRatesController(ILogger<ExchRatesController> logger, Client client)
         {
             _client = client;
             _logger = logger;
@@ -44,7 +43,6 @@ namespace ExchRatesFrontService.Controllers
 
                 using var call = _client.GetCurrencyQuotesAsync(req);
                 return (await call.ResponseAsync).Valutes.ToList();
-
             }
             catch (Exception ex)
             {
@@ -62,18 +60,6 @@ namespace ExchRatesFrontService.Controllers
         {
             try
             {
-                //var table = new CurrencyCodesEntity
-                //{
-                //    Id = "dsd",
-                //    Name = "asda",
-                //    EngName = "asda",
-                //    Nominal = 123,
-                //    ParentCode = "asda",
-                //    NumCode = 123,
-                //    CharCode = "asda"
-                //};
-                //_context.Currencies.Add(table);
-                //_context.SaveChanges();
                 using var call = _client.GetCurrencyCodesAsync(new Empty());
                 return (await call.ResponseAsync).Items.ToList();
             }

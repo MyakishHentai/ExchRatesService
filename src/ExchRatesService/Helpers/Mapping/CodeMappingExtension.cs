@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 namespace ExchRatesService.Helpers.Mapping
 {
+    /// <summary>
+    ///     Mapping сущностей, содежащих информацию по кодам валют.
+    /// </summary>
     public static class CodeMappingExtension
     {
         private static readonly Mapper _mapper;
@@ -14,38 +17,35 @@ namespace ExchRatesService.Helpers.Mapping
             var config = new MapperConfiguration(
                 cfg =>
                 {
+                    // WCF => Entity
                     cfg.CreateMap<CurrencyCodesDesc, CurrencyCodes>();
-                    cfg.CreateMap<CurrencyCodes, CurrencyInfo>();                    
+                    // Entity => gRPC
+                    cfg.CreateMap<CurrencyCodes, CurrencyInfo>();
                 });
-            // Настройка AutoMapper
             _mapper = new Mapper(config);
         }
 
         /// <summary>
-        ///     WCF to Entity
+        ///     WCF to Entity mapping.
         /// </summary>
-        /// <param name="codesDesc"></param>
-        /// <returns></returns>
-        public static Codes Map(this CodesDesc codesDesc)
-        {
-            return new Codes
+        /// <param name="this"></param>
+        /// <returns>Сущность ORM.</returns>
+        public static Codes Map(this CodesDesc @this)
+            => new Codes
             {
-                Name = codesDesc.Name,
+                Name = @this.Name,
                 Items = _mapper
-                        .Map<ICollection<CurrencyCodes>>(codesDesc.Items)
+                .Map<ICollection<CurrencyCodes>>(@this.Items)
             };
-        }
+
 
 
         /// <summary>
-        ///     Entity to gRPC.
+        ///     Entity to gRPC mapping. 
         /// </summary>
-        /// <param name="codes"></param>
-        /// <returns></returns>
-        public static CurrencyInfo Map(this CurrencyCodes codes)
-        {
-            var currencyInfo = new CurrencyInfo();
-            return _mapper.Map<CurrencyInfo>(codes);
-        }
+        /// <param name="this"></param>
+        /// <returns>Сущность контракта protobuf.</returns>
+        public static CurrencyInfo Map(this CurrencyCodes @this)
+            => _mapper.Map<CurrencyInfo>(@this);
     }
 }

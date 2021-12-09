@@ -1,6 +1,5 @@
 ﻿using ExchRatesService.Models;
 using ExchRatesService.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -24,38 +23,70 @@ namespace ExchRatesService.Repositories
         public IQueryable<Codes> Codes => _context.Codes.AsQueryable();
         public IQueryable<Quote> Quotes => _context.Quotes.AsQueryable();
         public IQueryable<CurrencyCodes> Currencies => _context.Currencies.AsQueryable();
+        public IQueryable<QuoteCurrency> QuotesCurrencies => _context.QuotesCurrencies.AsQueryable();
 
+        /// <summary>
+        ///     Обеспечивает корректное добавление/обновление сущностей для котировок.
+        /// </summary>
+        /// <param name="codes">Котировки валют.</param>
+        /// <returns><see cref="Task"/></returns>
         public async Task AddCodesAsync(Codes codes)
         {
             try
             {
-                _logger.LogInformation($@"[{DateTime.Now}]:Обращение к таблице для {nameof(_context.Currencies)}");
+                _logger.LogInformation($@"[{DateTime.Now}]:Обращение к таблице для {nameof(_context.Codes)}");
+                if (_context.Currencies.Any())
+                {
+                    var idsCur = _context.Currencies.Select(x => x.Id).ToList();
+                    var toUpdate = codes.Items.Where(x => idsCur.Contains(x.Id)).ToList();
+                    await Task.Run(() => _context.Currencies.UpdateRange(toUpdate));
+                }
                 if (_context.Codes.Any())
                 {
-                    await Task.Run(() => _context.Codes.UpdateRange(codes));
+                    await Task.Run(() => _context.Codes.Update(codes));
                     return;
                 }
-                await _context.Codes.AddRangeAsync(codes);
+                await _context.Codes.AddAsync(codes);
             }
             catch (Exception ex)
             {
                 _logger.LogError($@"Возникло исключение при обновлении таблицы для 
-                                {nameof(_context.Currencies)}:{ex.Message}", ex);
+                                {nameof(_context.Codes)}:{ex.Message}", ex);
                 throw;
             }
         }
 
-        public async Task AddQuotesAsync(ICollection<Quote> quotes)
+        /// <summary>
+        ///     Обеспечивает корректное добавление/обновление сущностей для кодов валют.
+        /// </summary>
+        /// <param name="codes">Коды валют.</param>
+        /// <returns><see cref="Task"/></returns>
+        public async Task AddQuotesAsync(ICollection<QuoteCurrency> quotesCur)
         {
             try
             {
-                _logger.LogInformation($@"[{DateTime.Now}]:Обращение к таблице для {nameof(_context.Quotes)}");
-                await _context.Quotes.AddRangeAsync(quotes);
+                _logger.LogInformation($@"[{DateTime.Now}]:Обращение к таблице для {nameof(_context.QuotesCurrencies)}");
+
+                // Получение времени котировок.
+                var times = _context.QuotesCurrencies.Select(x => x.Quote.Id).ToList();
+                var toUpdate = quotesCur.Where(x => times.Contains(x.Quote.Id)).ToList();
+
+                // Если есть уже котировки на этот период, то обновить их.
+                if (toUpdate.Any())
+                    await Task.Run(() => _context.QuotesCurrencies.UpdateRange(toUpdate));
+
+                // Если все было обновлено
+                if (toUpdate.Count == quotesCur.Count)
+                    return;
+
+                // Добавить новые значения и котировки.
+                var toAdd = quotesCur.Where(x => !times.Contains(x.Quote.Id)).ToList();
+                await _context.QuotesCurrencies.AddRangeAsync(toAdd);
             }
             catch (Exception ex)
             {
                 _logger.LogError($@"Возникло исключение при обновлении таблицы для 
-                                {nameof(_context.Quotes)}:{ex.Message}", ex);
+                                {nameof(_context.QuotesCurrencies)}:{ex.Message}", ex);
                 throw;
             }
         }

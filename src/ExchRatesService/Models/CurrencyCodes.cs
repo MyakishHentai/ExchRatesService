@@ -8,7 +8,7 @@ namespace ExchRatesService.Models
     {
         public CurrencyCodes()
         {
-            Quotes = new HashSet<Quote>();
+            Quotes = new HashSet<QuoteCurrency>();
         }
 
         [Key]
@@ -27,7 +27,7 @@ namespace ExchRatesService.Models
 
         [ForeignKey("MarketId")]
         public Codes Market { get; set; }
-        public ICollection<Quote> Quotes { get; set; }
+        public virtual ICollection<QuoteCurrency> Quotes { get; set; }
 
     }
 }

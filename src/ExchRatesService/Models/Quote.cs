@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ExchRatesService.Models
@@ -7,19 +9,15 @@ namespace ExchRatesService.Models
     {
         public Quote()
         {
+            Valutes = new HashSet<QuoteCurrency>();
         }
 
         [Key]
-        public int Id { get; set; }
-        public string ValuteId { get; set; }
-
         [DataType(DataType.Date)]
-        public string Date { get; set; }
+        public DateTime Id { get; set; }
 
         public string Name { get; set; }
-        public float Value { get; set; }
 
-        [ForeignKey("ValuteId")]
-        public CurrencyCodes Valute { get; set; }
+        public virtual ICollection<QuoteCurrency> Valutes { get; set; }
     }
 }

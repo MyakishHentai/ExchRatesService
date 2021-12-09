@@ -52,7 +52,7 @@ namespace ExchRatesService
                 app.UseDeveloperExceptionPage();
             }
 
-            loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "log.txt"));
+            loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "Logs\\log.txt"));
 
             app.UseRouting();
 
