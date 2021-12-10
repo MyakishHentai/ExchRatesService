@@ -2,16 +2,21 @@ using ExchRates.Common.Caching;
 using ExchRates.Common.Caching.Interfaces;
 using ExchRates.Common.Extensions;
 using ExchRates.Common.Middleware;
+using ExchRates.Common.Repositories;
+using ExchRates.Common.Services;
 using ExchRatesFrontService.Config;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
@@ -38,6 +43,10 @@ namespace ExchRatesFrontService
             }
 
             services
+                .AddGrpcClient<ExchRatesSvc.ExchRates.ExchRatesClient>
+                (opt => opt.Address = new Uri(serviceConfig.BackAddress));
+
+            services
                 .AddHttpContextAccessor()
                 .AddSwaggerGen(opt =>
                 {
@@ -45,6 +54,7 @@ namespace ExchRatesFrontService
                     opt.CustomSchemaIds(type => type.FullName);
                 })
                 .Configure<ServiceConfig>(_configuration)
+                .AddScoped<LoggingMiddleware>()
                 .AddControllers()
                 .AddJsonOptions(opt =>
                 {
@@ -53,23 +63,49 @@ namespace ExchRatesFrontService
                         JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic);
                     opt.JsonSerializerOptions.IgnoreNullValues = true;
                 });
-
-            services.AddGrpcClient<ExchRatesSvc.ExchRates.ExchRatesClient>
-                (opt => opt.Address = new Uri(serviceConfig.BACK_ADDR));
-
+            // Локальное
             if (serviceConfig.IsMemoryCache)
             {
                 services
                     .AddMemoryCache()
                     .AddScoped<ICacheService, MemoryCacheService>();
             }
+            // Распределенное кэширование
             else
             {
-                // TODO: cache
-                // Добавить вторичный сервис
+                services
+                    .AddStackExchangeRedisCache(opt =>
+                    {
+                        opt.Configuration = serviceConfig.CacheAddress;
+                    })
+                    .AddScoped<ICacheService, DistributedCacheService>();
             }
+            // JWT аутентификация Middleware.
             services
-                .AddScoped<LoggingMiddleware>();
+                .AddDistributedMemoryCache()
+                .AddSession(options =>
+                {
+                    options.IdleTimeout = TimeSpan.FromMinutes(30);
+                    options.Cookie.HttpOnly = true;
+                    options.Cookie.IsEssential = true;
+                })
+                .AddTransient<IUserRepository, UserRepository>()
+                .AddTransient<ITokenService, TokenService>()
+                .AddAuthorization()
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = "Jwt:Issuer",
+                        ValidAudience = "Jwt:Issuer",
+                        IssuerSigningKey = new SymmetricSecurityKey
+                        (Encoding.UTF8.GetBytes("Jwt:Key"))
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,17 +117,23 @@ namespace ExchRatesFrontService
             {
                 app.UseDeveloperExceptionPage();
             }
+            if (serviceConfig.IsFileLog)
+            {
+                loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "Logs\\log.txt"));
+            }
+
             app
                 .UseSwagger()
                 .UseSwaggerUI(opt =>
                     opt.SwaggerEndpoint("/swagger/v1/swagger.json",
                     $"{Program.ApplicationName} v1"));
-
-            loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "Logs\\log.txt"));
             app
                 .UseHttpsRedirection()
+                .UseCors()
+                .UseSession()
                 .UseRouting()
                 .UseAuthorization()
+                .UseAuthentication()
                 .UseMiddleware<LoggingMiddleware>()
                 .UseEndpoints(endpoints => endpoints.MapControllers());
         }

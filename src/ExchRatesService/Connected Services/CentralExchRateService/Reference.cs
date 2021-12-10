@@ -14,180 +14,16 @@ namespace CentralExchRateService
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="QuoteDesc", Namespace="http://schemas.datacontract.org/2004/07/ExchRatesWCFService.Models")]
-    public partial class QuoteDesc : object
+    [System.Runtime.Serialization.DataContractAttribute(Name="MarketBank", Namespace="http://schemas.datacontract.org/2004/07/ExchRatesWCFService.Models")]
+    public partial class MarketBank : object
     {
         
-        private string DateField;
-        
-        private string NameField;
-        
-        private CentralExchRateService.CurrencyQuoteDesc[] ValutesField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Date
-        {
-            get
-            {
-                return this.DateField;
-            }
-            set
-            {
-                this.DateField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name
-        {
-            get
-            {
-                return this.NameField;
-            }
-            set
-            {
-                this.NameField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public CentralExchRateService.CurrencyQuoteDesc[] Valutes
-        {
-            get
-            {
-                return this.ValutesField;
-            }
-            set
-            {
-                this.ValutesField = value;
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CurrencyQuoteDesc", Namespace="http://schemas.datacontract.org/2004/07/ExchRatesWCFService.Models")]
-    public partial class CurrencyQuoteDesc : object
-    {
-        
-        private string CharCodeField;
-        
-        private string IdField;
-        
-        private string NameField;
-        
-        private uint NominalField;
-        
-        private ushort NumCodeField;
-        
-        private string NumCodeStrField;
-        
-        private string ValueField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CharCode
-        {
-            get
-            {
-                return this.CharCodeField;
-            }
-            set
-            {
-                this.CharCodeField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Id
-        {
-            get
-            {
-                return this.IdField;
-            }
-            set
-            {
-                this.IdField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name
-        {
-            get
-            {
-                return this.NameField;
-            }
-            set
-            {
-                this.NameField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public uint Nominal
-        {
-            get
-            {
-                return this.NominalField;
-            }
-            set
-            {
-                this.NominalField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public ushort NumCode
-        {
-            get
-            {
-                return this.NumCodeField;
-            }
-            set
-            {
-                this.NumCodeField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string NumCodeStr
-        {
-            get
-            {
-                return this.NumCodeStrField;
-            }
-            set
-            {
-                this.NumCodeStrField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Value
-        {
-            get
-            {
-                return this.ValueField;
-            }
-            set
-            {
-                this.ValueField = value;
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CodesDesc", Namespace="http://schemas.datacontract.org/2004/07/ExchRatesWCFService.Models")]
-    public partial class CodesDesc : object
-    {
-        
-        private CentralExchRateService.CurrencyCodesDesc[] ItemsField;
+        private System.Collections.Generic.List<CentralExchRateService.CodeBank> ItemsField;
         
         private string NameField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public CentralExchRateService.CurrencyCodesDesc[] Items
+        public System.Collections.Generic.List<CentralExchRateService.CodeBank> Items
         {
             get
             {
@@ -215,8 +51,8 @@ namespace CentralExchRateService
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CurrencyCodesDesc", Namespace="http://schemas.datacontract.org/2004/07/ExchRatesWCFService.Models")]
-    public partial class CurrencyCodesDesc : object
+    [System.Runtime.Serialization.DataContractAttribute(Name="CodeBank", Namespace="http://schemas.datacontract.org/2004/07/ExchRatesWCFService.Models")]
+    public partial class CodeBank : object
     {
         
         private string CharCodeField;
@@ -340,16 +176,180 @@ namespace CentralExchRateService
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="QuoteBank", Namespace="http://schemas.datacontract.org/2004/07/ExchRatesWCFService.Models")]
+    public partial class QuoteBank : object
+    {
+        
+        private string DateField;
+        
+        private string NameField;
+        
+        private System.Collections.Generic.List<CentralExchRateService.CodeQuoteBank> ValutesField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Date
+        {
+            get
+            {
+                return this.DateField;
+            }
+            set
+            {
+                this.DateField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name
+        {
+            get
+            {
+                return this.NameField;
+            }
+            set
+            {
+                this.NameField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<CentralExchRateService.CodeQuoteBank> Valutes
+        {
+            get
+            {
+                return this.ValutesField;
+            }
+            set
+            {
+                this.ValutesField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CodeQuoteBank", Namespace="http://schemas.datacontract.org/2004/07/ExchRatesWCFService.Models")]
+    public partial class CodeQuoteBank : object
+    {
+        
+        private string CharCodeField;
+        
+        private string IdField;
+        
+        private string NameField;
+        
+        private uint NominalField;
+        
+        private ushort NumCodeField;
+        
+        private string NumCodeStrField;
+        
+        private string ValueField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CharCode
+        {
+            get
+            {
+                return this.CharCodeField;
+            }
+            set
+            {
+                this.CharCodeField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id
+        {
+            get
+            {
+                return this.IdField;
+            }
+            set
+            {
+                this.IdField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name
+        {
+            get
+            {
+                return this.NameField;
+            }
+            set
+            {
+                this.NameField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public uint Nominal
+        {
+            get
+            {
+                return this.NominalField;
+            }
+            set
+            {
+                this.NominalField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ushort NumCode
+        {
+            get
+            {
+                return this.NumCodeField;
+            }
+            set
+            {
+                this.NumCodeField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NumCodeStr
+        {
+            get
+            {
+                return this.NumCodeStrField;
+            }
+            set
+            {
+                this.NumCodeStrField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Value
+        {
+            get
+            {
+                return this.ValueField;
+            }
+            set
+            {
+                this.ValueField = value;
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="CentralExchRateService.ICentralExchRateService")]
     public interface ICentralExchRateService
     {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICentralExchRateService/GetCurrencyQuotesDesc", ReplyAction="http://tempuri.org/ICentralExchRateService/GetCurrencyQuotesDescResponse")]
-        System.Threading.Tasks.Task<CentralExchRateService.QuoteDesc> GetCurrencyQuotesDescAsync(System.DateTime date);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICentralExchRateService/GetCodesBank", ReplyAction="http://tempuri.org/ICentralExchRateService/GetCodesBankResponse")]
+        System.Threading.Tasks.Task<CentralExchRateService.MarketBank> GetCodesBankAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICentralExchRateService/GetCurrencyCodesDesc", ReplyAction="http://tempuri.org/ICentralExchRateService/GetCurrencyCodesDescResponse")]
-        System.Threading.Tasks.Task<CentralExchRateService.CodesDesc> GetCurrencyCodesDescAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICentralExchRateService/GetQuotesBank", ReplyAction="http://tempuri.org/ICentralExchRateService/GetQuotesBankResponse")]
+        System.Threading.Tasks.Task<CentralExchRateService.QuoteBank> GetQuotesBankAsync(System.DateTime date);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
@@ -402,14 +402,14 @@ namespace CentralExchRateService
         {
         }
         
-        public System.Threading.Tasks.Task<CentralExchRateService.QuoteDesc> GetCurrencyQuotesDescAsync(System.DateTime date)
+        public System.Threading.Tasks.Task<CentralExchRateService.MarketBank> GetCodesBankAsync()
         {
-            return base.Channel.GetCurrencyQuotesDescAsync(date);
+            return base.Channel.GetCodesBankAsync();
         }
         
-        public System.Threading.Tasks.Task<CentralExchRateService.CodesDesc> GetCurrencyCodesDescAsync()
+        public System.Threading.Tasks.Task<CentralExchRateService.QuoteBank> GetQuotesBankAsync(System.DateTime date)
         {
-            return base.Channel.GetCurrencyCodesDescAsync();
+            return base.Channel.GetQuotesBankAsync(date);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

@@ -16,11 +16,15 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ApplicationName": "ExchRatesService",
-        "BACK_ADDR": "https://localhost:5001",
+        "BackAddress": "https://localhost:5001",
+        "CacheAddress": "https://localhost:5001",
         "IsMemoryCache": "true",
-        "CACHE_FILE": "${baseDir}\\Logs\\",
-        "CacheTime": "5",
-        "IsSecure": "false"
+        "IsFileLog": "true",
+        "CacheTime": "10",
+        "IsSecure": "false",
+        "JwtKey": "ExchRatesService",
+        "JwtIssuer": "stale.myakish",
+        "Audience": "${applicationUrl}"
       }
     },
     "ExchRatesFrontService": {

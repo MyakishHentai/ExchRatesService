@@ -109,6 +109,7 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Security" />
     <Reference Include="System.Text.Encodings.Web, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.6.0.0\lib\net461\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
@@ -151,14 +152,29 @@
     <Compile Include="CentralExchRateService.svc.cs">
       <DependentUpon>CentralExchRateService.svc</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entity\CodeQuote.cs" />
+    <Compile Include="Models\Entity\Code.cs" />
+    <Compile Include="Models\Entity\ExchRatesContext.cs" />
     <Compile Include="ICentralExchRateService.cs" />
-    <Compile Include="Models\CurrencyQuoteDesc.cs" />
-    <Compile Include="Models\CodesDesc.cs" />
-    <Compile Include="Models\CurrencyCodesDesc.cs" />
-    <Compile Include="Models\QuoteDesc.cs" />
+    <Compile Include="Mapping\CodeMappingExtension.cs" />
+    <Compile Include="Mapping\QuoteMappingExtension.cs" />
+    <Compile Include="Migrations\202112101456174_AddCompanyMigration.cs" />
+    <Compile Include="Migrations\202112101456174_AddCompanyMigration.designer.cs">
+      <DependentUpon>202112101456174_AddCompanyMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\CodeQuoteBank.cs" />
+    <Compile Include="Models\Entity\ContextInitializer.cs" />
+    <Compile Include="Models\Entity\NpgSqlConfiguration .cs" />
+    <Compile Include="Models\MarketBank.cs" />
+    <Compile Include="Models\CodeBank.cs" />
+    <Compile Include="Models\QuoteBank.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\CbrInfoService.cs" />
-    <Compile Include="Services\Interfaces\IInfoService.cs" />
+    <Compile Include="Models\Entity\Quote.cs" />
+    <Compile Include="Services\BankInfoService.cs" />
+    <Compile Include="Services\DataBaseInfoService.cs" />
+    <Compile Include="Services\Interfaces\IDataBaseService.cs" />
+    <Compile Include="Services\Interfaces\IBankService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -172,6 +188,11 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202112101456174_AddCompanyMigration.resx">
+      <DependentUpon>202112101456174_AddCompanyMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

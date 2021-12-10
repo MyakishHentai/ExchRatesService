@@ -1,0 +1,32 @@
+version: '3.7'
+services:
+  master:
+    image: redis:latest
+    user: $redis_user:$redis_group
+    volumes:
+      - ./logs:/log
+      - ./conf:/conf
+    command: redis-server /conf/master.conf
+    network_mode: host
+    ports:
+      - 6379:6379
+  replica:
+    image: redis:latest
+    user: $redis_user:$redis_group
+    volumes:
+      - ./logs:/log
+      - ./conf:/conf
+    command: redis-server /conf/replica.conf
+    network_mode: host
+    ports:
+      - 6379:6379
+  sentinel:
+    image: redis:latest
+    user: $redis_user:$redis_group
+    volumes:
+      - ./logs:/log
+      - ./conf:/conf
+    command: redis-server /conf/sentinel.conf --sentinel
+    network_mode: host
+    ports:
+      - 26379:26379
