@@ -22,7 +22,7 @@
         "IsFileLog": "true",
         "CacheTime": "10",
         "IsSecure": "false",
-        "JwtKey": "ExchRatesService",
+        "JwtKey": "ExchRatesSvc_10.12.2021",
         "JwtIssuer": "stale.myakish",
         "Audience": "${applicationUrl}"
       }

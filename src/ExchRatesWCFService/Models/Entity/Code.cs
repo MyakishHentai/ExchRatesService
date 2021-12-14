@@ -22,7 +22,6 @@ namespace ExchRatesWCFService.Models.Entity
         [StringLength(255)]
         public string Name { get; set; }
 
-        [Required]
         [StringLength(255)]
         public string EngName { get; set; }
 

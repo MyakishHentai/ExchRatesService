@@ -21,8 +21,8 @@ namespace ExchRatesWCFService.Models.Entity
 
         public float? Value { get; set; }
 
-        public virtual Code Codes { get; set; }
+        public virtual Code Code { get; set; }
 
-        public virtual Quote Quotes { get; set; }
+        public virtual Quote Quote { get; set; }
     }
 }

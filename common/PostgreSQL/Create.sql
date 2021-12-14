@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS public."Codes"
 (
     "Id" character(12) COLLATE pg_catalog."default" NOT NULL,
     "Name" character varying(255) COLLATE pg_catalog."default" NOT NULL,
-    "EngName" character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    "EngName" character varying(255) COLLATE pg_catalog."default",
     "Nominal" integer NOT NULL DEFAULT 1,
     "ParentCode" character(12) COLLATE pg_catalog."default",
     "NumCode" smallint,
@@ -27,7 +27,7 @@ ALTER TABLE IF EXISTS public."Codes"
 
 CREATE TABLE IF NOT EXISTS public."Quotes"
 (
-    "Id" bigserial NOT NULL,
+    "Id" bigint GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
     "Date" date NOT NULL,
     "Name" character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT "Quotes_pkey" PRIMARY KEY ("Id"),

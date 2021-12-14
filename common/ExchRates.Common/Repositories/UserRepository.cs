@@ -9,21 +9,41 @@ namespace ExchRates.Common.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly List<UserDTO> _users = new List<UserDTO>();
+        private readonly Dictionary<string, FakeUser> _users = new Dictionary<string, FakeUser>();
 
         public UserRepository()
         {
-            _users.Add(new UserDTO
+            var admin = new FakeUser
             {
-                UserName = "stale.myakish",
+                UserName = "admin",
                 Password = "admin",
-                Role = "Developer"
-            });
+                Role = "admin"
+            };
+            _users.Add(admin.UserName.ToLower(), admin);
+            var me = new FakeUser
+            {
+                UserName = "stale",
+                Password = "myakish",
+                Role = "developer"
+            };
+            _users.Add(me.UserName.ToLower(), me);
         }
-        public UserDTO GetUser(string userName, string password)
+        public FakeUser GetUser(string userName, string password)
         {
-            return _users.Where(x => x.UserName.ToLower() == userName.ToLower()
-                && x.Password == password).FirstOrDefault();
+            try
+            {
+                var user = _users[userName.ToLower()];
+                if (user is null)
+                    return null;
+                if (user.Password != password)
+                    return null;
+                return user;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            
         }
     }
 }

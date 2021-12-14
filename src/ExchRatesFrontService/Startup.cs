@@ -54,6 +54,7 @@ namespace ExchRatesFrontService
                     opt.CustomSchemaIds(type => type.FullName);
                 })
                 .Configure<ServiceConfig>(_configuration)
+                .AddScoped<AuthorizationMiddleware>()
                 .AddScoped<LoggingMiddleware>()
                 .AddControllers()
                 .AddJsonOptions(opt =>
@@ -70,7 +71,7 @@ namespace ExchRatesFrontService
                     .AddMemoryCache()
                     .AddScoped<ICacheService, MemoryCacheService>();
             }
-            // Распределенное кэширование
+            // Файловое кэширование
             else
             {
                 services
@@ -100,10 +101,10 @@ namespace ExchRatesFrontService
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = "Jwt:Issuer",
-                        ValidAudience = "Jwt:Issuer",
+                        ValidIssuer = ServiceConfig.JwtIssuer,
+                        ValidAudience = ServiceConfig.JwtIssuer,
                         IssuerSigningKey = new SymmetricSecurityKey
-                        (Encoding.UTF8.GetBytes("Jwt:Key"))
+                        (Encoding.UTF8.GetBytes(ServiceConfig.JwtKey))
                     };
                 });
         }
@@ -119,7 +120,18 @@ namespace ExchRatesFrontService
             }
             if (serviceConfig.IsFileLog)
             {
-                loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "Logs\\log.txt"));
+                var fileName = "log.txt";
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "Logs");
+                var pathFile = Path.Combine(path, fileName);
+
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
+
+                FileInfo file = new FileInfo(pathFile);
+
+                if (!file.Exists)
+                    File.Create(pathFile).Close();
+                loggerFactory.AddFile(pathFile);
             }
 
             app
@@ -131,6 +143,7 @@ namespace ExchRatesFrontService
                 .UseHttpsRedirection()
                 .UseCors()
                 .UseSession()
+                .UseMiddleware<AuthorizationMiddleware>()
                 .UseRouting()
                 .UseAuthorization()
                 .UseAuthentication()

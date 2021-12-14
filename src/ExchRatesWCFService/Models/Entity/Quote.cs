@@ -15,7 +15,7 @@ namespace ExchRatesWCFService.Models.Entity
             CodeQuotes = new HashSet<CodeQuote>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
         [Column(TypeName = "date")]

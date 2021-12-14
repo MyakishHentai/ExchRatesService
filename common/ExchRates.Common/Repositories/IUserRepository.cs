@@ -9,6 +9,6 @@ namespace ExchRates.Common.Repositories
 {
     public interface IUserRepository
     {
-        UserDTO GetUser(string userName, string password);
+        FakeUser GetUser(string userName, string password);
     }
 }

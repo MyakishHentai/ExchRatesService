@@ -1,4 +1,5 @@
 ﻿using CentralExchRateService;
+using ExchRatesService.Helpers.Mapping;
 using ExchRatesService.Mapping;
 using ExchRatesSvc;
 using Google.Protobuf.WellKnownTypes;
@@ -37,6 +38,7 @@ namespace ExchRatesService.Services
             var response = new CodesReply();
             try
             {
+                _logger.LogInformation($"Вызов {nameof(GetCurrencyCodes)}...");
                 var codesDesc = await _centralExchService.GetCodesBankAsync();
 
                 response.Code = new CodesInfo
@@ -45,6 +47,7 @@ namespace ExchRatesService.Services
                 };
                 response.Items.AddRange(codesDesc.Items.Map());
 
+                _logger.LogInformation($"Успешное извлечение информации по кодам валют.");
                 return await Task.FromResult(response);
             }
             catch (Exception ex)
@@ -67,29 +70,21 @@ namespace ExchRatesService.Services
             var response = new QuotesReply();
             try
             {
-                //var quotesDesc = await _centralExchService
-                //    .GetCurrencyQuotesDescAsync(request.Time.ToDateTime().ToLocalTime());
-                
-                //    // Полученное время формируется только при ответе, т.к.
-                //    // существуют даты, когда информации по ним нет => 
-                //    // возвращается текущая дата.
-                //    var trueDate = DateTime.Parse(quotesDesc.Date)
-                //        .ToUniversalTime();
-                //    response.Course = new CourseInfo
-                //    {
-                //        Name = quotesDesc.Name,
-                //        Time = Timestamp.FromDateTime(trueDate)
-                //    };
+                _logger.LogInformation($"Вызов {nameof(GetCurrencyQuotes)}...");
+                var quotesDesc = await _centralExchService
+                    .GetQuotesBankAsync(request.Time.ToDateTime().ToLocalTime());
 
-                //    foreach (var quote in _dbManager.QuotesCurrencies
-                //        .Include(x=>x.Quote).Include(x=>x.Code)
-                //        .AsNoTracking()
-                //        .Where(x => x.Quote.Date == trueDate.ToLocalTime()))
-                //    {
-                //        var item = quote.Map();
-                //        response.Valutes.Add(item);
-                //    }
-                //}
+                var utcDate = DateTime.Parse(quotesDesc.Date)
+                    .ToUniversalTime();
+
+                response.Course = new CourseInfo
+                {
+                    Name = quotesDesc.Name,
+                    Time = Timestamp.FromDateTime(utcDate)
+                };
+                response.Valutes.AddRange(quotesDesc.Valutes.Map());
+
+                _logger.LogInformation($"Успешное извлечение информации по котировкам валют.");
                 return await Task.FromResult(response);
             }
             catch (Exception ex)

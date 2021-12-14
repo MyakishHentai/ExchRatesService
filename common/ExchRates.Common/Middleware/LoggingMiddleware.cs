@@ -26,8 +26,8 @@ namespace ExchRates.Common.Middleware
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, @$"[{DateTime.Now}]:Возникла ошибка при 
-                                        выполнения действия {context.Request.Path}");
+                _logger.LogError(ex, $"[{DateTime.Now}]:Возникла ошибка при " +
+                                     $"выполнения действия {context.Request.Path}");
                 throw;
             }
             finally

@@ -16,7 +16,7 @@ namespace ExchRatesFrontService.Models.Request
         public string UserName { get; set; }
 
         [Required]
-        [JsonPropertyName("userName")]
+        [JsonPropertyName("userPassword")]
         public string Password { get; set; }
     }
 }

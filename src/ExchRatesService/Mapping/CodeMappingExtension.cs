@@ -17,17 +17,18 @@ namespace ExchRatesService.Mapping
                cfg =>
                {
                    cfg.CreateMap<CodeBank, CurrencyInfo>()
-                   .ReverseMap();
+                   .ForMember(x => x.EngName, opt => opt.MapFrom(src => src.EngName ?? ""))
+                   .ForMember(x => x.ParentCode, opt => opt.MapFrom(src => src.ParentCode ?? ""));
                });
             _mapper = new Mapper(config);
         }
 
         /// <summary>
-        ///     WCF to Entity mapping.
+        ///     Преобразование <see cref="CodeBank"/> для типов protobuf.
         /// </summary>
-        /// <param name="this"></param>
-        /// <returns>Сущность ORM.</returns>
-        public static ICollection<CurrencyInfo> Map(this ICollection<CodeBank> @this)
-            => _mapper.Map<ICollection<CodeBank>, ICollection<CurrencyInfo>>(@this);
+        /// <param name="this">Тип контракта WCF.</param>
+        /// <returns>Тип контракта gRPC.</returns>
+        public static IEnumerable<CurrencyInfo> Map(this IEnumerable<CodeBank> @this)
+            => _mapper.Map<IEnumerable<CodeBank>, IEnumerable<CurrencyInfo>>(@this);
     }
 }

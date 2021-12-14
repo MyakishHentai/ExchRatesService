@@ -3,11 +3,12 @@ using ExchRatesFrontService.Config;
 using ExchRatesFrontService.Models.Request;
 using ExchRatesSvc;
 using Google.Protobuf.WellKnownTypes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Client = ExchRatesSvc.ExchRates.ExchRatesClient;
@@ -21,7 +22,6 @@ namespace ExchRatesFrontService.Controllers
     [Route("[controller]")]
     public class ExchRatesController : ControllerBase
     {
-        private readonly IConfiguration _config;
         private readonly ILogger<ExchRatesController> _logger;
         private readonly Client _client;
         private readonly ICacheService _cache;
@@ -48,6 +48,11 @@ namespace ExchRatesFrontService.Controllers
         {
             try
             {
+                if (dateRequest.Date > DateTime.Now || 
+                    dateRequest.Date < new DateTime(1993, 1, 1))
+                    throw new ValidationException($"Дата формирования котировок должна находится" +
+                        $" в промежутке от {new DateTime(1993, 1, 1).Date} до {DateTime.Now.Date}");
+
                 var date = dateRequest.Date.ToUniversalTime();
 
                 if (_cache.Get<IEnumerable<QuoteInfo>>(
@@ -62,14 +67,14 @@ namespace ExchRatesFrontService.Controllers
                 using var call = _client.GetCurrencyQuotesAsync(req);
                 var result = (await call.ResponseAsync).Valutes.ToList();
 
-                _cache.Set<IEnumerable<QuoteInfo>>($"{nameof(GetCurrencyQuotes)}_{date}", 
+                _cache.Set<IEnumerable<QuoteInfo>>($"{nameof(GetCurrencyQuotes)}_{date}",
                     result, Convert.ToInt32(ServiceConfig.CacheTime));
                 return Ok(result);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return Problem("Сервис временно недоступен");
+                return Problem($"{ex.Message}");
             }
         }
 
@@ -97,54 +102,8 @@ namespace ExchRatesFrontService.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return Problem("Сервис временно недоступен");
+                return Problem($"{ex.Message}");
             }
-        }
-
-
-        //[HttpPost("Login")]
-        //public bool Login(
-        //    [FromQuery] BaseRequest baseRequest,
-        //    [FromForm] LoginRequest request)
-        //{
-        //    if (string.IsNullOrEmpty(request.UserName) || string.IsNullOrEmpty(request.Password))
-        //        return ErrorAuthentication;
-
-        //    var validUser = _userRep.GetUser(request.UserName, request.Password);
-
-        //    if (validUser != null)
-        //    {
-        //        _token = _tokenSvc.BuildToken(_config["Jwt:Key"].ToString(), _config["Jwt:Issuer"].ToString(), validUser);
-        //        if (_token != null)
-        //        {
-        //            HttpContext.Session.SetString("Token", _token);
-        //            return SuccessAuthentication;
-        //        }
-        //        return ErrorAuthentication;
-        //    }
-        //    return ErrorAuthentication;
-        //}
-
-        //private bool ErrorAuthentication 
-        //{
-        //    get
-        //    {
-        //        _logger.LogError("Авторизация/аутентификация не пройдена.");
-        //        HttpContext.Response.StatusCode = 403;
-        //        return false;
-        //    }
-        //}
-
-        //private bool SuccessAuthentication
-        //{
-        //    get 
-        //    {
-        //        _logger.LogError("Авторизация/аутентификация успешно пройдена.");
-        //        HttpContext.Response.StatusCode = 200;
-        //        return true;
-        //    }
-        //}
-
-
+        }           
     }
 }

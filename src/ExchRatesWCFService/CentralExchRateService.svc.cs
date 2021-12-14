@@ -1,11 +1,8 @@
 ﻿using ExchRatesService.Helpers.Mapping;
 using ExchRatesWCFService.Models;
-using ExchRatesWCFService.Models.Entity;
-using ExchRatesWCFService.Services;
 using ExchRatesWCFService.Services.Interfaces;
 using NLog;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -20,18 +17,15 @@ namespace ExchRatesWCFService
     {
         private readonly IBankService _bankService;
         private readonly IDataBaseService _baseService;
+        private readonly ILogger _logger;
 
-        private readonly NLog.ILogger _logger;
-
-        public CentralExchRateService()
+        public CentralExchRateService(ILogger logger, IBankService bank, IDataBaseService data)
         {
-            _logger = LogManager.GetLogger("fileLogger");
-
-            _bankService = new BankInfoService();
-            _baseService = new DataBaseInfoService(_logger);
+            _logger = logger;
+            _bankService = bank;
+            _baseService = data;
         }
 
-      
         /// <summary>
         ///     Получение описания валют и их кодов.
         /// </summary>
@@ -42,18 +36,14 @@ namespace ExchRatesWCFService
             {
                 _logger.Info($"Вызов {nameof(GetCodesBankAsync)}");
                 var codesBank = _bankService.GetCodesInfoXML<MarketBank>();
-                // Проверям БД.
                 using (_baseService)
                 {
-                    var codesBase = await _baseService.Codes.AsNoTracking().ToListAsync();
-                    // Проверяем на совпдаение данных.
-                    while (_baseService.Codes.Count() != codesBank.Items.Length)
+                    if (_baseService.Codes.Count() != codesBank.Items.Length)
                     {
                         var toAdd = codesBank.Items.Map();
-                        await _baseService.AddCodesAsync(toAdd);
-                        await _baseService.SaveAsync();
+                        await _baseService.UpdateCodesAsync(toAdd);
                     }
-                    codesBase = await _baseService.Codes.AsNoTracking().ToListAsync();
+                    var codesBase = await _baseService.Codes.AsNoTracking().ToListAsync();
                     var codes = codesBase.Map();
                     return new MarketBank
                     {
@@ -64,7 +54,7 @@ namespace ExchRatesWCFService
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, $@"Ошибка десериализации {nameof(MarketBank)}: {ex.Message}");
+                _logger.Error(ex, $@"Ошибка при получении данных {nameof(MarketBank)}: {ex.Message}");
                 throw new SerializationException(
                     "Не удалось получить информацию по кодам валют.", ex);
             }
@@ -81,11 +71,37 @@ namespace ExchRatesWCFService
             try
             {
                 _logger.Info($"Вызов {nameof(GetQuotesBankAsync)}");
-                return await Task.Run(() => _bankService.GetDailyInfoXML<QuoteBank>(date));
-            } 
+                var result = new QuoteBank
+                {
+                    Name = _bankService.MarketName
+                };
+                using (_baseService)
+                {
+                    QuoteBank quotesBank = null;
+                    var quotesBase = _baseService.CodeQuotes
+                        .Where(x => x.Quote.Date == date)
+                        .AsNoTracking().ToList();
+
+                    if (date != DateTime.Today && quotesBase.Any())
+                    {
+                        var quoteExist = quotesBase.Map();
+                        result.Date = quoteExist.Date;
+                        result.Valutes = quoteExist.Valutes;
+                        return result;
+                    }
+                    // Если нет записей в базе.
+                    quotesBank = _bankService
+                            .GetDailyInfoXML<QuoteBank>(date);
+                    await _baseService
+                        .UpdateQuotesAsync(quotesBank.Map());
+                    result.Date = date.ToString();
+                    result.Valutes = quotesBank.Valutes;
+                    return result;
+                }
+            }
             catch (Exception ex)
             {
-                _logger.Error(ex, $@"Ошибка десериализации {nameof(QuoteBank)}:{ex.Message}");
+                _logger.Error(ex, $@"Ошибка при получении данных {nameof(QuoteBank)}:{ex.Message}");
                 throw new SerializationException(
                     "Не удалось получить информацию по котировкам валют.", ex);
             }

@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="ExchRatesWCFService.CentralExchRateService" CodeBehind="CentralExchRateService.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="ExchRatesWCFService.CentralExchRateService" CodeBehind="CentralExchRateService.svc.cs" Factory="Ninject.Extensions.Wcf.NinjectServiceHostFactory"%>

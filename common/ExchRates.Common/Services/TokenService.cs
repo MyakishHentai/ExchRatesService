@@ -14,7 +14,7 @@ namespace ExchRates.Common.Services
     {
         private const double EXPIRY_DURATION_MINUTES = 30;
 
-        public string BuildToken(string key, string issuer, UserDTO user)
+        public string BuildToken(string key, string issuer, FakeUser user)
         {
             var claims = new[] {
             new Claim(ClaimTypes.Name, user.UserName),

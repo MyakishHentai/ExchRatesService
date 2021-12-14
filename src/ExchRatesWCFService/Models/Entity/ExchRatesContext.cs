@@ -40,12 +40,12 @@ namespace ExchRatesWCFService.Models.Entity
 
             modelBuilder.Entity<Code>()
                 .HasMany(e => e.CodeQuotes)
-                .WithRequired(e => e.Codes)
+                .WithRequired(e => e.Code)
                 .HasForeignKey(e => e.CodeId);
 
             modelBuilder.Entity<Quote>()
                 .HasMany(e => e.CodeQuotes)
-                .WithRequired(e => e.Quotes)
+                .WithRequired(e => e.Quote)
                 .HasForeignKey(e => e.QuoteId);
         }
     }
