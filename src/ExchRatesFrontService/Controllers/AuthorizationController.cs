@@ -36,6 +36,12 @@ namespace ExchRatesFrontService.Controllers
             _userRep = userRep;
         }
 
+
+        /// <summary>
+        ///     Аутентификация путем установления JWT в сессии.
+        /// </summary>
+        /// <param name="logRequest">Минимальные данные для авторизации.</param>
+        /// <returns>Код ответа на запрос.</returns>
         [AllowAnonymous]
         [HttpPost("Login")]
         public IActionResult Login([FromQuery] LoginRequest logRequest)

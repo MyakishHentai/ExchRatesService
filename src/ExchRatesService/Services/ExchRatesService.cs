@@ -24,7 +24,7 @@ namespace ExchRatesService.Services
             _centralExchService = service;
         }
 
-
+        
         /// <summary>
         ///     Получение информации о валютах и их кодах.
         /// </summary>

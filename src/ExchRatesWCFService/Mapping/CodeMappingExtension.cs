@@ -41,11 +41,21 @@ namespace ExchRatesWCFService.Mapping
             Mapper = new Mapper(config);
         }
 
+        /// <summary>
+        ///     Преобразование к сущностям контрактов <see cref="CodeBank" />.
+        /// </summary>
+        /// <param name="this">Коды валют из БД.</param>
+        /// <returns>Сущности для контрактов.</returns>
         public static IEnumerable<CodeBank> Map(this IEnumerable<Code> @this)
         {
             return Mapper.Map<IEnumerable<Code>, IEnumerable<CodeBank>>(@this);
         }
 
+        /// <summary>
+        ///     Преобразование к сущностям для БД.
+        /// </summary>
+        /// <param name="this">Коды валют ЦБ РФ.</param>
+        /// <returns>Сущности для БД.</returns>
         public static IEnumerable<Code> Map(this IEnumerable<CodeBank> @this)
         {
             return Mapper.Map<IEnumerable<CodeBank>, IEnumerable<Code>>(@this);
@@ -81,10 +91,10 @@ namespace ExchRatesWCFService.Mapping
         }
 
         /// <summary>
-        ///     Преобразование из сущностей для типа контракта <see cref="QuoteBank" />.
+        ///     Преобразование к сущностям контрактов <see cref="QuoteBank" />.
         /// </summary>
-        /// <param name="this">Котировки валют.</param>
-        /// <returns>Объект контракта WCF.</returns>
+        /// <param name="this">Котировки валют из БД.</param>
+        /// <returns>Сущности для контрактов.</returns>
         public static QuoteBank Map(this IEnumerable<CodeQuote> @this)
         {
             if (@this is null || !@this.Any())

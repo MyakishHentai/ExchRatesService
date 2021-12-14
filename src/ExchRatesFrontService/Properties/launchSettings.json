@@ -18,7 +18,7 @@
         "ApplicationName": "ExchRatesService",
         "BackAddress": "https://localhost:5001",
         "CacheAddress": "https://localhost:5001",
-        "IsMemoryCache": "true",
+        "IsMemoryCache": "false",
         "IsFileLog": "true",
         "CacheTime": "10",
         "IsSecure": "false",

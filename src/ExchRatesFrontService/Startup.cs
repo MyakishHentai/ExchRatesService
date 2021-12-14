@@ -48,7 +48,7 @@ namespace ExchRatesFrontService
                 .AddHttpContextAccessor()
                 .AddSwaggerGen(opt =>
                 {
-                    opt.SwaggerDoc("v1", new OpenApiInfo {Title = $"{Program.ApplicationName} API", Version = "v1"});
+                    opt.SwaggerDoc("v1", new OpenApiInfo { Title = $"{Program.ApplicationName} API", Version = "v1" });
                     opt.CustomSchemaIds(type => type.FullName);
                 })
                 .Configure<ServiceConfig>(_configuration)
@@ -66,12 +66,17 @@ namespace ExchRatesFrontService
             if (serviceConfig.IsMemoryCache)
                 services
                     .AddMemoryCache()
-                    .AddScoped<ICacheService, MemoryCacheService>();
+                    .AddSingleton<ICacheService, MemoryCacheService>();
             // Файловое кэширование
             else
+            {
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "FileCache");
+                //if (!Directory.Exists(path))
+                //    Directory.CreateDirectory(path);
                 services
-                    .AddStackExchangeRedisCache(opt => { opt.Configuration = serviceConfig.CacheAddress; })
-                    .AddScoped<ICacheService, DistributedCacheService>();
+                    .AddSingleton<ICacheService, FileCacheService>(x => 
+                    new FileCacheService(new ObjectBinder(), path));
+            }
             // JWT аутентификация Middleware.
             services
                 .AddDistributedMemoryCache()

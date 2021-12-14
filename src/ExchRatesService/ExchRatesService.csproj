@@ -19,6 +19,8 @@
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.27.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
+    <PackageReference Include="Quartz" Version="3.3.3" />
+    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.3.3" />
     <PackageReference Include="System.ServiceModel.Duplex" Version="4.7.*" />
     <PackageReference Include="System.ServiceModel.Http" Version="4.7.*" />
     <PackageReference Include="System.ServiceModel.NetTcp" Version="4.7.*" />
