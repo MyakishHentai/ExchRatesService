@@ -1,15 +1,12 @@
-﻿using ExchRates.Common.Repositories;
+﻿using System;
+using ExchRates.Common.Repositories;
 using ExchRates.Common.Services;
-using ExchRatesFrontService.Config;
 using ExchRatesFrontService.Models.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
 
 namespace ExchRatesFrontService.Controllers
 {
@@ -25,12 +22,13 @@ namespace ExchRatesFrontService.Controllers
         private readonly ILogger<AuthorizationController> _logger;
         private readonly ITokenService _tokenSvc;
         private readonly IUserRepository _userRep;
-        private string _token = null;
+        private string _token;
 
-        public AuthorizationController(ILogger<AuthorizationController> logger,
-                               IConfiguration config, 
-                               ITokenService tokenSvc, 
-                               IUserRepository userRep)
+        public AuthorizationController(
+            ILogger<AuthorizationController> logger,
+            IConfiguration config,
+            ITokenService tokenSvc,
+            IUserRepository userRep)
         {
             _logger = logger;
             _config = config;
@@ -46,26 +44,20 @@ namespace ExchRatesFrontService.Controllers
             {
                 if (string.IsNullOrEmpty(logRequest.UserName) || string.IsNullOrEmpty(logRequest.Password))
                     return Unauthorized("Заполните обязательные поля для авторизации.");
-                
+
                 var validUser = _userRep.GetUser(logRequest.UserName, logRequest.Password);
 
-                if (validUser != null)
-                {
-                    var asd = _config["JwtKey"];
-                    _token = _tokenSvc.BuildToken(_config["JwtKey"], _config["JwtIssuer"], validUser);
-                    if (_token != null)
-                    {
-                        HttpContext.Session.SetString("Token", _token);
-                        return Ok("Вы успешно авторизованы.");
-                    }
-                    return Unauthorized("Ошибка генерации токена.");
-                }
-                return Unauthorized("Пользователь не найден.");
+                if (validUser == null) return Unauthorized("Пользователь не найден.");
+                _token = _tokenSvc.BuildToken(_config["JwtKey"], _config["JwtIssuer"], validUser);
+                if (_token == null) return Unauthorized("Ошибка генерации токена.");
+                HttpContext.Session.SetString("Token", _token);
+                return Ok("Вы успешно авторизованы.");
+
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return Problem("Сервис временно недоступен");
+                return Problem("Сервис временно недоступен.");
             }
         }
     }

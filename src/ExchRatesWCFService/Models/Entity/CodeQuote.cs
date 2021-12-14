@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.Spatial;
 
 namespace ExchRatesWCFService.Models.Entity
 {
     [Table("public.CodeQuotes")]
-    public partial class CodeQuote
+    public class CodeQuote
     {
         [Key]
         [Column(Order = 0)]
@@ -16,7 +13,7 @@ namespace ExchRatesWCFService.Models.Entity
 
         [Key]
         [Column(Order = 1)]
-        [StringLength(12)]
+        [StringLength(8)]
         public string CodeId { get; set; }
 
         public float? Value { get; set; }

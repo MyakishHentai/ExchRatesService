@@ -1,6 +1,6 @@
-﻿using ExchRates.Common.Caching.Interfaces;
+﻿using System;
+using ExchRates.Common.Caching.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
-using System;
 
 namespace ExchRates.Common.Caching
 {
@@ -15,11 +15,8 @@ namespace ExchRates.Common.Caching
 
         public bool Get<T>(object key, out T data)
         {
-            if (_memoryCache.TryGetValue(key, out data))
-            {
-                return true;
-            }
-            data = default(T);
+            if (_memoryCache.TryGetValue(key, out data)) return true;
+            data = default;
             return false;
         }
 

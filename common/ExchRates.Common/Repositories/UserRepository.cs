@@ -1,9 +1,6 @@
-﻿using ExchRates.Common.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ExchRates.Common.Model;
 
 namespace ExchRates.Common.Repositories
 {
@@ -28,6 +25,7 @@ namespace ExchRates.Common.Repositories
             };
             _users.Add(me.UserName.ToLower(), me);
         }
+
         public FakeUser GetUser(string userName, string password)
         {
             try
@@ -35,15 +33,12 @@ namespace ExchRates.Common.Repositories
                 var user = _users[userName.ToLower()];
                 if (user is null)
                     return null;
-                if (user.Password != password)
-                    return null;
-                return user;
+                return user.Password != password ? null : user;
             }
             catch (Exception)
             {
                 return null;
             }
-            
         }
     }
 }

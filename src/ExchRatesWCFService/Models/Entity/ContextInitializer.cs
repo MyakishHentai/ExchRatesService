@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
 
 namespace ExchRatesWCFService.Models.Entity
 {
-    class ContextInitializer : DropCreateDatabaseIfModelChanges<ExchRatesContext>
+    internal class ContextInitializer : DropCreateDatabaseIfModelChanges<ExchRatesContext>
     {
         protected override void Seed(ExchRatesContext db)
         {

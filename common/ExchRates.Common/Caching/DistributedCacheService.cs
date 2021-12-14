@@ -1,9 +1,9 @@
-﻿using ExchRates.Common.Caching.Interfaces;
+﻿using System;
+using System.Text;
+using ExchRates.Common.Caching.Interfaces;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using System;
-using System.Text;
 
 namespace ExchRates.Common.Caching
 {
@@ -16,7 +16,7 @@ namespace ExchRates.Common.Caching
         public DistributedCacheService(IDistributedCache cache, IConfiguration config)
         {
             _distCache = cache;
-            int minutes = int.Parse(config["profiles: environmentVariables: CacheAddress"]);
+            var minutes = int.Parse(config["profiles: environmentVariables: CacheAddress"]);
             _options = new DistributedCacheEntryOptions()
                 .SetSlidingExpiration(TimeSpan.FromMinutes(minutes))
                 .SetAbsoluteExpiration(DateTime.Now.AddHours(6));
@@ -32,6 +32,7 @@ namespace ExchRates.Common.Caching
                     data = default;
                     return false;
                 }
+
                 var dataDes = Encoding.UTF8.GetString(dataEnc);
                 var dataType = JsonConvert.DeserializeObject<T>(dataDes);
                 data = dataType;

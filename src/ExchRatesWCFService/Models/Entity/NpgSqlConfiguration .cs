@@ -1,21 +1,21 @@
-﻿using Npgsql;
-using System.Data.Entity;
+﻿using System.Data.Entity;
+using Npgsql;
 
 namespace ExchRatesWCFService.Models.Entity
 {
     public class NpgSqlConfiguration : DbConfiguration
     {
+        private const string NAME = "Npgsql";
+
         public NpgSqlConfiguration()
         {
-            var name = "Npgsql";
+            SetProviderFactory(NAME,
+                NpgsqlFactory.Instance);
 
-            SetProviderFactory(providerInvariantName: name,
-                               providerFactory: NpgsqlFactory.Instance);
+            SetProviderServices(NAME,
+                NpgsqlServices.Instance);
 
-            SetProviderServices(providerInvariantName: name,
-                                provider: NpgsqlServices.Instance);
-
-            SetDefaultConnectionFactory(connectionFactory: new NpgsqlConnectionFactory());
+            SetDefaultConnectionFactory(new NpgsqlConnectionFactory());
         }
     }
 }

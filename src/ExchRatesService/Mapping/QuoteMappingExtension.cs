@@ -1,16 +1,17 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using CentralExchRateService;
 using ExchRatesSvc;
-using System.Collections.Generic;
 
-namespace ExchRatesService.Helpers.Mapping
+namespace ExchRatesService.Mapping
 {
     /// <summary>
     ///     Mapping сущностей, содержащих котировки валют.
     /// </summary>
     public static class QuoteMappingExtension
     {
-        private static readonly Mapper _mapper;
+        private static readonly Mapper Mapper;
+
         static QuoteMappingExtension()
         {
             var config = new MapperConfiguration(
@@ -20,16 +21,18 @@ namespace ExchRatesService.Helpers.Mapping
                         .ForMember(x => x.Value, opt => opt.MapFrom(src => float.Parse(src.Value)))
                         .ReverseMap();
                 });
-            _mapper = new Mapper(config);
+            Mapper = new Mapper(config);
         }
 
 
         /// <summary>
-        ///     Преобразование <see cref="CodeBank"/> для типов protobuf.
+        ///     Преобразование <see cref="CodeBank" /> для типов protobuf.
         /// </summary>
         /// <param name="this">Тип контракта WCF.</param>
         /// <returns>Тип контракта gRPC.</returns>
-        public static IEnumerable<QuoteInfo> Map(this IEnumerable<CodeQuoteBank> @this) =>
-            _mapper.Map<IEnumerable<CodeQuoteBank>, IEnumerable<QuoteInfo>>(@this);
+        public static IEnumerable<QuoteInfo> Map(this IEnumerable<CodeQuoteBank> @this)
+        {
+            return Mapper.Map<IEnumerable<CodeQuoteBank>, IEnumerable<QuoteInfo>>(@this);
+        }
     }
 }

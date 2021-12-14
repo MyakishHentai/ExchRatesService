@@ -1,17 +1,17 @@
-﻿using ExchRatesWCFService.Services.Interfaces;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Xml.Serialization;
+using ExchRatesWCFService.Services.Interfaces;
 
 namespace ExchRatesWCFService.Services
 {
     public class BankInfoService : IBankService
     {
-        private const string LinkCodesInfo = "http://www.cbr.ru/scripts/XML_valFull.asp";
-        private const string LinkDaily = "https://www.cbr.ru/scripts/XML_daily.asp";
-        private const string ParamDaily = "date_req";
-        private const string Market = "Foreign Currency Market Lib";
-        public string MarketName => Market;
+        private const string LINK_CODES_INFO = "http://www.cbr.ru/scripts/XML_valFull.asp";
+        private const string LINK_DAILY = "https://www.cbr.ru/scripts/XML_daily.asp";
+        private const string PARAM_DAILY = "date_req";
+        private const string MARKET = "Foreign Currency Market Lib";
+        public string MarketName => MARKET;
 
 
         /// <summary>
@@ -19,23 +19,16 @@ namespace ExchRatesWCFService.Services
         /// </summary>
         /// <typeparam name="T">Тип десериализации.</typeparam>
         /// <returns>Сгенерированный тип.</returns>
-        public T GetCodesInfoXML<T>() where T : class
+        public T GetCodesInfoXml<T>() where T : class
         {
-            try
+            using (var client = new HttpClient())
             {
-                using (HttpClient client = new HttpClient())
+                using (var xmlStream = client.GetStreamAsync(LINK_CODES_INFO).Result)
                 {
-                    using (var xmlStream = client.GetStreamAsync(LinkCodesInfo).Result)
-                    {
-                        var serializer = new XmlSerializer(typeof(T));
-                        var code = serializer.Deserialize(xmlStream) as T;                        
-                        return code;
-                    }
+                    var serializer = new XmlSerializer(typeof(T));
+                    var code = serializer.Deserialize(xmlStream) as T;
+                    return code;
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
         }
 
@@ -44,27 +37,18 @@ namespace ExchRatesWCFService.Services
         /// </summary>
         /// <typeparam name="T">Тип десериализации.</typeparam>
         /// <returns>Сгенерированный тип.</returns>
-        public T GetDailyInfoXML<T>(DateTime date) where T : class
+        public T GetDailyInfoXml<T>(DateTime date) where T : class
         {
-            var extLink = date == DateTime.MinValue ?
-                LinkDaily :
-                $@"{LinkDaily}?{ParamDaily}={date:dd/MM/yyyy}";
+            var extLink = date == DateTime.MinValue ? LINK_DAILY : $@"{LINK_DAILY}?{PARAM_DAILY}={date:dd/MM/yyyy}";
 
-            try
+            using (var client = new HttpClient())
             {
-                using (HttpClient client = new HttpClient())
+                using (var xmlStream = client.GetStreamAsync(extLink).Result)
                 {
-                    using (var xmlStream = client.GetStreamAsync(extLink).Result)
-                    {
-                        var serializer = new XmlSerializer(typeof(T));
-                        var code = serializer.Deserialize(xmlStream) as T;
-                        return code;
-                    }
+                    var serializer = new XmlSerializer(typeof(T));
+                    var code = serializer.Deserialize(xmlStream) as T;
+                    return code;
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
         }
     }

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ExchRatesWCFService.Services.Interfaces
@@ -13,7 +12,7 @@ namespace ExchRatesWCFService.Services.Interfaces
         ///  Коды валют (рынок)
         /// </summary>
         IQueryable<Code> Codes { get; }
-        
+
         /// <summary>
         ///     Котировки (сведения справки)
         /// </summary>
@@ -34,7 +33,7 @@ namespace ExchRatesWCFService.Services.Interfaces
         /// <summary>
         ///     Обеспечивает корректное добавление/обновление сущностей для котировок.
         /// </summary>
-        /// <param name="codes">Коды валют.</param>
+        /// <param name="quotes">Котировки валют</param>
         /// <returns><see cref="Task"/></returns>
         Task UpdateQuotesAsync(IEnumerable<CodeQuote> quotes);
 

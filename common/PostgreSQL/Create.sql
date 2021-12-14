@@ -4,11 +4,11 @@
 
 CREATE TABLE IF NOT EXISTS public."Codes"
 (
-    "Id" character(12) COLLATE pg_catalog."default" NOT NULL,
+    "Id" character varying(8) COLLATE pg_catalog."default" NOT NULL,
     "Name" character varying(255) COLLATE pg_catalog."default" NOT NULL,
     "EngName" character varying(255) COLLATE pg_catalog."default",
     "Nominal" integer NOT NULL DEFAULT 1,
-    "ParentCode" character(12) COLLATE pg_catalog."default",
+    "ParentCode" character varying(8) COLLATE pg_catalog."default",
     "NumCode" smallint,
     "CharCode" character(3) COLLATE pg_catalog."default",
     CONSTRAINT "Codes_pkey" PRIMARY KEY ("Id")
@@ -46,7 +46,7 @@ ALTER TABLE IF EXISTS public."Quotes"
 CREATE TABLE IF NOT EXISTS public."CodeQuotes"
 (
     "QuoteId" bigint NOT NULL,
-    "CodeId" character(12) COLLATE pg_catalog."default" NOT NULL,
+    "CodeId" character varying(8) COLLATE pg_catalog."default" NOT NULL,
     "Value" real DEFAULT 0.00,
     CONSTRAINT "CodeQuotes_pkey" PRIMARY KEY ("QuoteId", "CodeId"),
     CONSTRAINT "FK_Code" FOREIGN KEY ("CodeId")

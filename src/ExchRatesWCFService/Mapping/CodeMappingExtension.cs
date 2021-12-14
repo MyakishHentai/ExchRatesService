@@ -1,18 +1,20 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using AutoMapper;
 using ExchRatesWCFService.Models;
 using ExchRatesWCFService.Models.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace ExchRatesService.Helpers.Mapping
+namespace ExchRatesWCFService.Mapping
 {
     /// <summary>
     ///     Mapping сущностей, содежащих информацию по кодам валют.
     /// </summary>
     public static class CodeMappingExtension
     {
-        private static readonly Mapper _mapper;
+        private static readonly Mapper Mapper;
+
         static CodeMappingExtension()
         {
             var config = new MapperConfiguration(
@@ -20,7 +22,7 @@ namespace ExchRatesService.Helpers.Mapping
                 {
                     cfg.CreateMap<CodeBank, Code>()
                         .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id.Trim()));
-                    cfg.CreateMap<Code, CodeBank> ()
+                    cfg.CreateMap<Code, CodeBank>()
                         .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id.Trim()));
 
                     cfg.CreateMap<QuoteBank, Quote>()
@@ -33,17 +35,21 @@ namespace ExchRatesService.Helpers.Mapping
                         .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id.Trim()));
 
                     cfg.CreateMap<Quote, QuoteBank>()
-                        .ForMember(x => x.Date, opt => opt.MapFrom(src => src.Date.ToString()))
+                        .ForMember(x => x.Date, opt => opt.MapFrom(src => src.Date.ToString(CultureInfo.CurrentCulture)))
                         .ReverseMap();
                 });
-            _mapper = new Mapper(config);
+            Mapper = new Mapper(config);
         }
 
         public static IEnumerable<CodeBank> Map(this IEnumerable<Code> @this)
-            => _mapper.Map<IEnumerable<Code>, IEnumerable<CodeBank>>(@this);
+        {
+            return Mapper.Map<IEnumerable<Code>, IEnumerable<CodeBank>>(@this);
+        }
 
         public static IEnumerable<Code> Map(this IEnumerable<CodeBank> @this)
-            => _mapper.Map<IEnumerable<CodeBank>, IEnumerable<Code>>(@this);
+        {
+            return Mapper.Map<IEnumerable<CodeBank>, IEnumerable<Code>>(@this);
+        }
 
         /// <summary>
         ///     Преобразование к сущностям для БД.
@@ -52,13 +58,13 @@ namespace ExchRatesService.Helpers.Mapping
         /// <returns>Сущности для БД.</returns>
         public static IEnumerable<CodeQuote> Map(this QuoteBank @this)
         {
-            if (@this is null || @this.Valutes is null)
+            if (@this?.Valutes is null)
                 return null;
             var result = new List<CodeQuote>(@this.Valutes.Length);
             foreach (var valute in @this.Valutes)
             {
-                var code = _mapper.Map<Code>(valute);
-                var quote = _mapper.Map<Quote>(@this);
+                var code = Mapper.Map<Code>(valute);
+                var quote = Mapper.Map<Quote>(@this);
                 var valueStr = @this.Valutes.First(x => x.Id == code.Id).Value;
 
                 var codeQuote = new CodeQuote
@@ -75,7 +81,7 @@ namespace ExchRatesService.Helpers.Mapping
         }
 
         /// <summary>
-        ///     Преобразование из сущностей для типа контракта <see cref="QuoteBank"/>.
+        ///     Преобразование из сущностей для типа контракта <see cref="QuoteBank" />.
         /// </summary>
         /// <param name="this">Котировки валют.</param>
         /// <returns>Объект контракта WCF.</returns>
@@ -87,17 +93,18 @@ namespace ExchRatesService.Helpers.Mapping
             var result = new QuoteBank
             {
                 Name = quote.Name,
-                Date = quote.Date.ToString()
+                Date = quote.Date.ToString(CultureInfo.CurrentCulture)
             };
 
             var codesQuote = new List<CodeQuoteBank>(@this.Count());
 
             foreach (var item in @this)
             {
-                var code = _mapper.Map<CodeQuoteBank>(item.Code);
+                var code = Mapper.Map<CodeQuoteBank>(item.Code);
                 code.Value = item.Value.ToString();
                 codesQuote.Add(code);
             }
+
             result.Valutes = codesQuote.ToArray();
 
             return result;

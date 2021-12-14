@@ -1,21 +1,19 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace ExchRates.Common.Logger
 {
     public class FileLogger : ILogger
     {
-        private string _filePath;
-        private static object _lock = new object();
+        private static readonly object Lock = new object();
+        private readonly string _filePath;
+
         public FileLogger(string path)
         {
             _filePath = path;
         }
+
         public IDisposable BeginScope<TState>(TState state)
         {
             return null;
@@ -28,18 +26,16 @@ namespace ExchRates.Common.Logger
         }
 
         public void Log<TState>(
-                                LogLevel logLevel, 
-                                EventId eventId, 
-                                TState state, 
-                                Exception exception, 
-                                Func<TState, Exception, string> formatter)
+            LogLevel logLevel,
+            EventId eventId,
+            TState state,
+            Exception exception,
+            Func<TState, Exception, string> formatter)
         {
-            if (formatter != null)
+            if (formatter == null) return;
+            lock (Lock)
             {
-                lock (_lock)
-                {
-                    File.AppendAllText(_filePath, formatter(state, exception) + Environment.NewLine);
-                }
+                File.AppendAllText(_filePath, formatter(state, exception) + Environment.NewLine);
             }
         }
     }

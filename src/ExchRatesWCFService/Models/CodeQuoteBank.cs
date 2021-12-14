@@ -14,16 +14,10 @@ namespace ExchRatesWCFService.Models
         [XmlIgnore]
         public ushort NumCode
         {
-            get
-            {
-                return !string.IsNullOrWhiteSpace(NumCodeStr)
-                        && ushort.TryParse(NumCodeStr, out ushort value) ?
-                        value : ushort.MinValue;
-            }
-            set
-            {
-                NumCodeStr = value.ToString();
-            }
+            get => !string.IsNullOrWhiteSpace(NumCodeStr)
+                   && ushort.TryParse(NumCodeStr, out var value) 
+                    ? value : ushort.MinValue;
+            set => NumCodeStr = value.ToString();
         }
         public string CharCode { get; set; }
 

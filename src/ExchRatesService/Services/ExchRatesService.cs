@@ -1,14 +1,11 @@
-﻿using CentralExchRateService;
-using ExchRatesService.Helpers.Mapping;
+﻿using System;
+using System.Threading.Tasks;
+using CentralExchRateService;
 using ExchRatesService.Mapping;
 using ExchRatesSvc;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ExchRatesService.Services
 {
@@ -18,8 +15,9 @@ namespace ExchRatesService.Services
     /// </summary>
     public class ExchRatesService : ExchRatesSvc.ExchRates.ExchRatesBase
     {
-        private readonly ILogger<ExchRatesService> _logger;
         private readonly ICentralExchRateService _centralExchService;
+        private readonly ILogger<ExchRatesService> _logger;
+
         public ExchRatesService(ILogger<ExchRatesService> logger, ICentralExchRateService service)
         {
             _logger = logger;
@@ -43,11 +41,11 @@ namespace ExchRatesService.Services
 
                 response.Code = new CodesInfo
                 {
-                    Name = codesDesc.Name                    
+                    Name = codesDesc.Name
                 };
                 response.Items.AddRange(codesDesc.Items.Map());
 
-                _logger.LogInformation($"Успешное извлечение информации по кодам валют.");
+                _logger.LogInformation("Успешное извлечение информации по кодам валют.");
                 return await Task.FromResult(response);
             }
             catch (Exception ex)
@@ -84,7 +82,7 @@ namespace ExchRatesService.Services
                 };
                 response.Valutes.AddRange(quotesDesc.Valutes.Map());
 
-                _logger.LogInformation($"Успешное извлечение информации по котировкам валют.");
+                _logger.LogInformation("Успешное извлечение информации по котировкам валют.");
                 return await Task.FromResult(response);
             }
             catch (Exception ex)
@@ -93,6 +91,5 @@ namespace ExchRatesService.Services
                 throw new Exception("Ошибка при попытке получения данных.");
             }
         }
-
     }
 }

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ExchRates.Common.Model
+﻿namespace ExchRates.Common.Model
 {
+    /// <summary>
+    ///     Тип пользователя, необходимый для тестовой аутентификации.
+    /// </summary>
     public class FakeUser
     {
         public string UserName { get; set; }

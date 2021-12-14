@@ -1,16 +1,15 @@
-﻿using ExchRates.Common.Caching.Interfaces;
-using ExchRatesFrontService.Config;
-using ExchRatesFrontService.Models.Request;
-using ExchRatesSvc;
-using Google.Protobuf.WellKnownTypes;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using ExchRates.Common.Caching.Interfaces;
+using ExchRatesFrontService.Config;
+using ExchRatesFrontService.Models.Request;
+using ExchRatesSvc;
+using Google.Protobuf.WellKnownTypes;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Client = ExchRatesSvc.ExchRates.ExchRatesClient;
 
 namespace ExchRatesFrontService.Controllers
@@ -22,9 +21,9 @@ namespace ExchRatesFrontService.Controllers
     [Route("[controller]")]
     public class ExchRatesController : ControllerBase
     {
-        private readonly ILogger<ExchRatesController> _logger;
-        private readonly Client _client;
         private readonly ICacheService _cache;
+        private readonly Client _client;
+        private readonly ILogger<ExchRatesController> _logger;
 
 
         public ExchRatesController(
@@ -48,10 +47,10 @@ namespace ExchRatesFrontService.Controllers
         {
             try
             {
-                if (dateRequest.Date > DateTime.Now || 
+                if (dateRequest.Date > DateTime.Now ||
                     dateRequest.Date < new DateTime(1993, 1, 1))
-                    throw new ValidationException($"Дата формирования котировок должна находится" +
-                        $" в промежутке от {new DateTime(1993, 1, 1).Date} до {DateTime.Now.Date}");
+                    throw new ValidationException("Дата формирования котировок должна находиться " +
+                                                  $"в промежутке от {new DateTime(1993, 1, 1).Date} до {DateTime.Now.Date}");
 
                 var date = dateRequest.Date.ToUniversalTime();
 
@@ -61,7 +60,7 @@ namespace ExchRatesFrontService.Controllers
 
                 var req = new QuotesRequest
                 {
-                    Time = Timestamp.FromDateTime(date),
+                    Time = Timestamp.FromDateTime(date)
                 };
 
                 using var call = _client.GetCurrencyQuotesAsync(req);
@@ -88,10 +87,8 @@ namespace ExchRatesFrontService.Controllers
             try
             {
                 if (_cache.Get<IEnumerable<CurrencyInfo>>($"{nameof(GetCurrencyCodes)}_{DateTime.Today}",
-                      out var cached))
-                {
+                    out var cached))
                     return Ok(cached);
-                }
                 using var call = _client.GetCurrencyCodesAsync(new Empty());
                 var result = (await call.ResponseAsync).Items.ToList();
 
@@ -104,6 +101,6 @@ namespace ExchRatesFrontService.Controllers
                 _logger.LogError(ex.Message);
                 return Problem($"{ex.Message}");
             }
-        }           
+        }
     }
 }

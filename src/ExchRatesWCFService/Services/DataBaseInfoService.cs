@@ -1,21 +1,21 @@
-﻿using ExchRatesWCFService.Models.Entity;
-using ExchRatesWCFService.Services.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
+using ExchRatesWCFService.Models.Entity;
+using ExchRatesWCFService.Services.Interfaces;
+using NLog;
 
 namespace ExchRatesWCFService.Services
 {
     public class DataBaseInfoService : IDataBaseService
     {
-        private bool _disposed = false;
-        private ExchRatesContext _context;
-        private readonly NLog.ILogger _logger;
+        private readonly ExchRatesContext _context;
+        private readonly ILogger _logger;
+        private bool _disposed;
 
-        public DataBaseInfoService(NLog.ILogger logger, ExchRatesContext context)
+        public DataBaseInfoService(ILogger logger, ExchRatesContext context)
         {
             _logger = logger;
             _context = context;
@@ -30,7 +30,9 @@ namespace ExchRatesWCFService.Services
         ///     Обеспечивает корректное добавление/обновление сущностей для кодов валют.
         /// </summary>
         /// <param name="newCodes">Коды валют.</param>
-        /// <returns><see cref="Task"/></returns>
+        /// <returns>
+        ///     <see cref="Task" />
+        /// </returns>
         public async Task UpdateCodesAsync(IEnumerable<Code> newCodes)
         {
             try
@@ -40,14 +42,12 @@ namespace ExchRatesWCFService.Services
                 {
                     await Task.Run(() =>
                     {
-                        foreach (var item in newCodes)
-                        {
-                            _context.Codes.AddOrUpdate(item);
-                        }
+                        foreach (var item in newCodes) _context.Codes.AddOrUpdate(item);
                     });
                     await SaveAsync();
                     return;
                 }
+
                 _context.Codes.AddRange(newCodes);
                 await SaveAsync();
             }
@@ -63,7 +63,9 @@ namespace ExchRatesWCFService.Services
         ///     Обеспечивает корректное добавление/обновление сущностей для котировок.
         /// </summary>
         /// <param name="newQuotes">Котировки валют.</param>
-        /// <returns><see cref="Task"/></returns>
+        /// <returns>
+        ///     <see cref="Task" />
+        /// </returns>
         public async Task UpdateQuotesAsync(IEnumerable<CodeQuote> newQuotes)
         {
             try
@@ -71,7 +73,7 @@ namespace ExchRatesWCFService.Services
                 _logger.Info($@"[{DateTime.Now}]:Обращение к таблице для {nameof(_context.CodeQuotes)}");
                 var dates = _context.CodeQuotes.Select(x => x.Quote.Date).ToList();
                 var toUpdate = newQuotes
-                    .Where(x=> dates.Contains(x.Quote.Date))
+                    .Where(x => dates.Contains(x.Quote.Date))
                     .ToList();
                 // Если есть уже котировки на этот период, то обновить их.  
                 if (toUpdate.Any())
@@ -81,17 +83,16 @@ namespace ExchRatesWCFService.Services
                     {
                         var quotes = _context.CodeQuotes.Where(x => upDates.Contains(x.Quote.Date));
                         foreach (var quote in quotes)
-                        {
                             quote.Value = toUpdate
                                 .FirstOrDefault(x => x.Code.Id == quote.CodeId.Trim())?
                                 .Value;
-                        }
                     });
                     await SaveAsync();
                     return;
                 }
-                var quoteCurrent = newQuotes.FirstOrDefault().Quote;
-                _context.Quotes.Add(quoteCurrent);
+
+                var quoteCurrent = newQuotes.FirstOrDefault()?.Quote;
+                _context.Quotes.Add(quoteCurrent ?? throw new InvalidOperationException());
                 await SaveAsync();
 
                 // Все ли коды валют для котировок сущетствуют в базе
@@ -99,10 +100,7 @@ namespace ExchRatesWCFService.Services
                 var codesExist = newQuotes
                     .Where(x => idCodes.Contains(x.Code.Id.Trim()))
                     .ToList();
-                foreach (var quote in codesExist)
-                {
-                    quote.Code = null;
-                }
+                foreach (var quote in codesExist) quote.Code = null;
                 await Task.Run(() =>
                 {
                     foreach (var item in newQuotes)
@@ -122,25 +120,28 @@ namespace ExchRatesWCFService.Services
             }
         }
 
-        public async Task SaveAsync() => await _context.SaveChangesAsync();
-        public void Save() => _context.SaveChanges();
-
-        public virtual void Dispose(bool disposing)
+        public async Task SaveAsync()
         {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    _context.Dispose();
-                }
-            }
-            _disposed = true;
+            await _context.SaveChangesAsync();
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
         }
 
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        public virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+                if (disposing)
+                    _context.Dispose();
+            _disposed = true;
         }
     }
 }

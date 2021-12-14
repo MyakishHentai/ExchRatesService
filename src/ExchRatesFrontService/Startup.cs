@@ -1,3 +1,9 @@
+using System;
+using System.IO;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Unicode;
 using ExchRates.Common.Caching;
 using ExchRates.Common.Caching.Interfaces;
 using ExchRates.Common.Extensions;
@@ -14,12 +20,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
-using System.IO;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Unicode;
 
 namespace ExchRatesFrontService
 {
@@ -35,22 +35,20 @@ namespace ExchRatesFrontService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ServiceConfig serviceConfig = _configuration.Get<ServiceConfig>();
+            var serviceConfig = _configuration.Get<ServiceConfig>();
 
             if (serviceConfig.IsSecure)
-            {
                 AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-            }
 
             services
                 .AddGrpcClient<ExchRatesSvc.ExchRates.ExchRatesClient>
-                (opt => opt.Address = new Uri(serviceConfig.BackAddress));
+                    (opt => opt.Address = new Uri(serviceConfig.BackAddress));
 
             services
                 .AddHttpContextAccessor()
                 .AddSwaggerGen(opt =>
                 {
-                    opt.SwaggerDoc("v1", new OpenApiInfo { Title = $"{Program.ApplicationName} API", Version = "v1" });
+                    opt.SwaggerDoc("v1", new OpenApiInfo {Title = $"{Program.ApplicationName} API", Version = "v1"});
                     opt.CustomSchemaIds(type => type.FullName);
                 })
                 .Configure<ServiceConfig>(_configuration)
@@ -66,21 +64,14 @@ namespace ExchRatesFrontService
                 });
             // Локальное
             if (serviceConfig.IsMemoryCache)
-            {
                 services
                     .AddMemoryCache()
                     .AddScoped<ICacheService, MemoryCacheService>();
-            }
             // Файловое кэширование
             else
-            {
                 services
-                    .AddStackExchangeRedisCache(opt =>
-                    {
-                        opt.Configuration = serviceConfig.CacheAddress;
-                    })
+                    .AddStackExchangeRedisCache(opt => { opt.Configuration = serviceConfig.CacheAddress; })
                     .AddScoped<ICacheService, DistributedCacheService>();
-            }
             // JWT аутентификация Middleware.
             services
                 .AddDistributedMemoryCache()
@@ -104,7 +95,7 @@ namespace ExchRatesFrontService
                         ValidIssuer = ServiceConfig.JwtIssuer,
                         ValidAudience = ServiceConfig.JwtIssuer,
                         IssuerSigningKey = new SymmetricSecurityKey
-                        (Encoding.UTF8.GetBytes(ServiceConfig.JwtKey))
+                            (Encoding.UTF8.GetBytes(ServiceConfig.JwtKey))
                     };
                 });
         }
@@ -112,22 +103,19 @@ namespace ExchRatesFrontService
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            ServiceConfig serviceConfig = _configuration.Get<ServiceConfig>();
+            var serviceConfig = _configuration.Get<ServiceConfig>();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
             if (serviceConfig.IsFileLog)
             {
-                var fileName = "log.txt";
+                const string fileName = "log.txt";
                 var path = Path.Combine(Directory.GetCurrentDirectory(), "Logs");
                 var pathFile = Path.Combine(path, fileName);
 
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
 
-                FileInfo file = new FileInfo(pathFile);
+                var file = new FileInfo(pathFile);
 
                 if (!file.Exists)
                     File.Create(pathFile).Close();
@@ -138,7 +126,7 @@ namespace ExchRatesFrontService
                 .UseSwagger()
                 .UseSwaggerUI(opt =>
                     opt.SwaggerEndpoint("/swagger/v1/swagger.json",
-                    $"{Program.ApplicationName} v1"));
+                        $"{Program.ApplicationName} v1"));
             app
                 .UseHttpsRedirection()
                 .UseCors()
