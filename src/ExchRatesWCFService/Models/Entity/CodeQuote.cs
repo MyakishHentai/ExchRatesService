@@ -9,7 +9,7 @@ namespace ExchRatesWCFService.Models.Entity
         [Key]
         [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long QuoteId { get; set; }
+        public int QuoteId { get; set; }
 
         [Key]
         [Column(Order = 1)]

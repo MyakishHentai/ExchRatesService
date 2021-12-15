@@ -16,7 +16,7 @@ namespace ExchRatesWCFService.Models.Entity
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [Column(TypeName = "date")] public DateTime Date { get; set; }
 

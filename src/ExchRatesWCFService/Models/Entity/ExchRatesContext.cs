@@ -4,13 +4,15 @@ namespace ExchRatesWCFService.Models.Entity
 {
     public class ExchRatesContext : DbContext
     {
-        //static ExchRatesContext()
-        //{
-        //    Database.SetInitializer(new ContextInitializer());
-        //}
+        static ExchRatesContext()
+        {
+            //Database.SetInitializer(new ContextInitializer());
+        }
 
         public ExchRatesContext() : base("DBModel")
-        { }
+        {
+            //Database.CreateIfNotExists();
+        }
 
         public virtual DbSet<CodeQuote> CodeQuotes { get; set; }
         public virtual DbSet<Code> Codes { get; set; }

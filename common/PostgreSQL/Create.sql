@@ -27,7 +27,7 @@ ALTER TABLE IF EXISTS public."Codes"
 
 CREATE TABLE IF NOT EXISTS public."Quotes"
 (
-    "Id" bigint GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+    "Id" integer GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
     "Date" date NOT NULL,
     "Name" character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT "Quotes_pkey" PRIMARY KEY ("Id"),
@@ -45,7 +45,7 @@ ALTER TABLE IF EXISTS public."Quotes"
 
 CREATE TABLE IF NOT EXISTS public."CodeQuotes"
 (
-    "QuoteId" bigint NOT NULL,
+    "QuoteId" integer NOT NULL,
     "CodeId" character varying(8) COLLATE pg_catalog."default" NOT NULL,
     "Value" real DEFAULT 0.00,
     CONSTRAINT "CodeQuotes_pkey" PRIMARY KEY ("QuoteId", "CodeId"),
