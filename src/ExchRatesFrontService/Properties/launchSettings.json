@@ -17,14 +17,10 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ApplicationName": "ExchRatesService",
         "BackAddress": "https://localhost:5001",
-        "CacheAddress": "https://localhost:5001",
         "IsMemoryCache": "false",
         "IsFileLog": "true",
         "CacheTime": "10",
-        "IsSecure": "false",
-        "JwtKey": "ExchRatesSvc_10.12.2021",
-        "JwtIssuer": "stale.myakish",
-        "Audience": "${applicationUrl}"
+        "IsSecure": "false"        
       }
     },
     "ExchRatesFrontService": {
@@ -36,5 +32,5 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
-  }
+  }  
 }

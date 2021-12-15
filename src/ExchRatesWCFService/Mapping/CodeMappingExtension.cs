@@ -21,22 +21,21 @@ namespace ExchRatesWCFService.Mapping
                 cfg =>
                 {
                     cfg.CreateMap<CodeBank, Code>()
-                        .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id.Trim()));
+                        .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id.Trim()))
+                        .ForMember(x => x.ParentCode, opt => opt.MapFrom(src => src.ParentCode.Trim()));
                     cfg.CreateMap<Code, CodeBank>()
-                        .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id.Trim()));
-
-                    cfg.CreateMap<QuoteBank, Quote>()
-                        .ForMember(x => x.Date, opt => opt.MapFrom(src => DateTime.Parse(src.Date)))
-                        .ReverseMap();
+                        .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id.Trim()))
+                        .ForMember(x => x.ParentCode, opt => opt.MapFrom(src => src.ParentCode.Trim()));
 
                     cfg.CreateMap<Code, CodeQuoteBank>()
                         .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id.Trim()));
                     cfg.CreateMap<CodeQuoteBank, Code>()
                         .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id.Trim()));
 
+                    cfg.CreateMap<QuoteBank, Quote>()
+                        .ForMember(x => x.Date, opt => opt.MapFrom(src => DateTime.Parse(src.Date)));
                     cfg.CreateMap<Quote, QuoteBank>()
-                        .ForMember(x => x.Date, opt => opt.MapFrom(src => src.Date.ToString(CultureInfo.CurrentCulture)))
-                        .ReverseMap();
+                        .ForMember(x => x.Date, opt => opt.MapFrom(src => src.Date.ToString(CultureInfo.CurrentCulture)));
                 });
             Mapper = new Mapper(config);
         }

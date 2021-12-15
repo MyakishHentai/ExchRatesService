@@ -5,7 +5,6 @@ namespace ExchRatesWCFService.App_Start
 {
     using System;
     using System.Web;
-    using ExchRatesWCFService.Helpers;
     using ExchRatesWCFService.Models.Entity;
     using ExchRatesWCFService.Services;
     using ExchRatesWCFService.Services.Interfaces;
@@ -69,7 +68,6 @@ namespace ExchRatesWCFService.App_Start
             kernel.Bind<ExchRatesContext>().To<ExchRatesContext>().InRequestScope();
             kernel.Bind<IBankService>().To<BankInfoService>().InSingletonScope();
             kernel.Bind<IDataBaseService>().To<DataBaseInfoService>().InRequestScope();
-            CentralBankSheduler.Start();
         }
     }
 }

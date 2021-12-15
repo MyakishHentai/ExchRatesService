@@ -2,26 +2,29 @@
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ExchRates.Common.Model;
 using ExchRates.Common.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace ExchRates.Common.Middleware
 {
     public class AuthorizationMiddleware : IMiddleware
     {
-        private readonly IConfiguration _config;
         private readonly ILogger<AuthorizationMiddleware> _logger;
         private readonly ITokenService _tokenSvc;
+        private readonly JwtOptions _options;
 
-
-        public AuthorizationMiddleware(ILogger<AuthorizationMiddleware> logger, ITokenService tokenSvc,
-            IConfiguration config)
+        public AuthorizationMiddleware(
+            ILogger<AuthorizationMiddleware> logger, 
+            ITokenService tokenSvc,
+            IOptions<JwtOptions> options)
         {
             _logger = logger;
             _tokenSvc = tokenSvc;
-            _config = config;
+            _options = options.Value;
         }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
@@ -43,7 +46,7 @@ namespace ExchRates.Common.Middleware
                 }
 
                 context.Request.Headers.Add("Authorization", "Bearer " + token);
-                if (_tokenSvc.IsTokenValid(_config["JwtKey"], _config["JwtIssuer"], token))
+                if (_tokenSvc.IsTokenValid(_options.JwtKey, _options.JwtIssuer, token))
                 {
                     await next(context);
                     return;

@@ -8,6 +8,7 @@ using ExchRates.Common.Caching;
 using ExchRates.Common.Caching.Interfaces;
 using ExchRates.Common.Extensions;
 using ExchRates.Common.Middleware;
+using ExchRates.Common.Model;
 using ExchRates.Common.Repositories;
 using ExchRates.Common.Services;
 using ExchRatesFrontService.Config;
@@ -35,14 +36,21 @@ namespace ExchRatesFrontService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var serviceConfig = _configuration.Get<ServiceConfig>();
+            services.AddOptions();
+            services.Configure<JwtOptions>(_configuration.GetSection(JwtOptions.Position));
 
-            if (serviceConfig.IsSecure)
+            var jwtIssuer = _configuration[$"{JwtOptions.Position}:{nameof(JwtOptions.JwtIssuer)}"];
+            var jwtKey = _configuration[$"{JwtOptions.Position}:{nameof(JwtOptions.JwtKey)}"];
+            var jwtAudience = _configuration[$"{JwtOptions.Position}:{nameof(JwtOptions.Audience)}"];
+
+            var config = _configuration.Get<ServiceConfig>();
+
+            if (config.IsSecure)
                 AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
 
             services
                 .AddGrpcClient<ExchRatesSvc.ExchRates.ExchRatesClient>
-                    (opt => opt.Address = new Uri(serviceConfig.BackAddress));
+                    (opt => opt.Address = new Uri(config.BackAddress));
 
             services
                 .AddHttpContextAccessor()
@@ -63,7 +71,7 @@ namespace ExchRatesFrontService
                     opt.JsonSerializerOptions.IgnoreNullValues = true;
                 });
             // Локальное
-            if (serviceConfig.IsMemoryCache)
+            if (config.IsMemoryCache)
                 services
                     .AddMemoryCache()
                     .AddSingleton<ICacheService, MemoryCacheService>();
@@ -71,8 +79,6 @@ namespace ExchRatesFrontService
             else
             {
                 var path = Path.Combine(Directory.GetCurrentDirectory(), "FileCache");
-                //if (!Directory.Exists(path))
-                //    Directory.CreateDirectory(path);
                 services
                     .AddSingleton<ICacheService, FileCacheService>(x => 
                     new FileCacheService(new ObjectBinder(), path));
@@ -97,10 +103,10 @@ namespace ExchRatesFrontService
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = ServiceConfig.JwtIssuer,
-                        ValidAudience = ServiceConfig.JwtIssuer,
+                        ValidIssuer = jwtIssuer,
+                        ValidAudience = jwtAudience,
                         IssuerSigningKey = new SymmetricSecurityKey
-                            (Encoding.UTF8.GetBytes(ServiceConfig.JwtKey))
+                            (Encoding.UTF8.GetBytes(jwtKey))
                     };
                 });
         }

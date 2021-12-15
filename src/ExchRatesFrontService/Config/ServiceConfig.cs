@@ -11,11 +11,6 @@
         public string BackAddress { get; set; }
 
         /// <summary>
-        ///     Адрес Reddis or e.t.c.
-        /// </summary>
-        public string CacheAddress { get; set; }
-
-        /// <summary>
         ///     Путь файла для кэш-сервиса.
         /// </summary>
         public bool IsMemoryCache { get; set; } = true;
@@ -36,21 +31,6 @@
         ///     Время хранение объектов в кэше (минуты)
         /// </summary>
         public static int CacheTime { get; set; } = 5;
-
-        /// <summary>
-        ///     JwtKey для аутентификации.
-        /// </summary>
-        public static string JwtKey { get; set; }
-
-        /// <summary>
-        ///     JwtIssuer для аутентификации.
-        /// </summary>
-        public static string JwtIssuer { get; set; }
-
-        /// <summary>
-        ///     Audience для аутентификации.
-        /// </summary>
-        public static string Audience { get; set; }
 
         #endregion
     }

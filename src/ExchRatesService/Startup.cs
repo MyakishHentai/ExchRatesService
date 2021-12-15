@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using CentralExchRateService;
 using ExchRates.Common.Extensions;
-using ExchRatesService.Config;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -25,9 +24,7 @@ namespace ExchRatesService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            _configuration.Get<ServiceConfig>();
             services
-                .Configure<ServiceConfig>(_configuration)
                 // Клиент для WCF
                 .AddScoped<ICentralExchRateService, CentralExchRateServiceClient>()
                 .AddGrpc();
@@ -36,8 +33,6 @@ namespace ExchRatesService
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            _configuration.Get<ServiceConfig>();
-
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "Logs\\log.txt"));

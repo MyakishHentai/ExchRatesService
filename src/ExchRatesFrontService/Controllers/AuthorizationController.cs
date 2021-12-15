@@ -1,12 +1,13 @@
 ﻿using System;
+using ExchRates.Common.Model;
 using ExchRates.Common.Repositories;
 using ExchRates.Common.Services;
 using ExchRatesFrontService.Models.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace ExchRatesFrontService.Controllers
 {
@@ -18,7 +19,7 @@ namespace ExchRatesFrontService.Controllers
     [Route("[controller]")]
     public class AuthorizationController : ControllerBase
     {
-        private readonly IConfiguration _config;
+        private readonly JwtOptions _options;
         private readonly ILogger<AuthorizationController> _logger;
         private readonly ITokenService _tokenSvc;
         private readonly IUserRepository _userRep;
@@ -26,12 +27,12 @@ namespace ExchRatesFrontService.Controllers
 
         public AuthorizationController(
             ILogger<AuthorizationController> logger,
-            IConfiguration config,
+            IOptions<JwtOptions> options,
             ITokenService tokenSvc,
             IUserRepository userRep)
         {
             _logger = logger;
-            _config = config;
+            _options = options.Value;
             _tokenSvc = tokenSvc;
             _userRep = userRep;
         }
@@ -54,7 +55,7 @@ namespace ExchRatesFrontService.Controllers
                 var validUser = _userRep.GetUser(logRequest.UserName, logRequest.Password);
 
                 if (validUser == null) return Unauthorized("Пользователь не найден.");
-                _token = _tokenSvc.BuildToken(_config["JwtKey"], _config["JwtIssuer"], validUser);
+                _token = _tokenSvc.BuildToken(_options.JwtKey, _options.JwtIssuer, validUser);
                 if (_token == null) return Unauthorized("Ошибка генерации токена.");
                 HttpContext.Session.SetString("Token", _token);
                 return Ok("Вы успешно авторизованы.");

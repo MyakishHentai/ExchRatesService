@@ -170,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CentralExchRateService.svc" />
+    <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -177,8 +178,12 @@
     <Compile Include="CentralExchRateService.svc.cs">
       <DependentUpon>CentralExchRateService.svc</DependentUpon>
     </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\CentralBankSheduler.cs" />
     <Compile Include="Helpers\CodesSheduler.cs" />
+    <Compile Include="Helpers\JobFactory.cs" />
     <Compile Include="Models\Entity\CodeQuote.cs" />
     <Compile Include="Models\Entity\Code.cs" />
     <Compile Include="Models\Entity\ExchRatesContext.cs" />

@@ -43,7 +43,6 @@ namespace ExchRatesWCFService.Helpers
                         .UpdateQuotesAsync(quotesBank.Map());
                     _logger.Info($"[TaskScheduler] Обновлено {quotesBank.Valutes.Length}...");
                 }
-                return;
             }
             catch (Exception ex)
             {

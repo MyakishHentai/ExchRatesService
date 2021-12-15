@@ -19,7 +19,8 @@ namespace ExchRatesService.Mapping
                 {
                     cfg.CreateMap<CodeBank, CurrencyInfo>()
                         .ForMember(x => x.EngName, opt => opt.MapFrom(src => src.EngName ?? ""))
-                        .ForMember(x => x.ParentCode, opt => opt.MapFrom(src => src.ParentCode ?? ""));
+                        .ForMember(x => x.ParentCode, opt => opt.MapFrom(src => src.ParentCode ?? ""))
+                        .ReverseMap();
                 });
             Mapper = new Mapper(config);
         }
